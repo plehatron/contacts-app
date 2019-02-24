@@ -39,7 +39,7 @@ There is no user authentication. It is assumed that there is only one applicatio
 ## User Stories
 
 **1.1. As a user I can create or edit a contact, which includes the first name, last name, profile photo, email, 
-favorite check, and one or more telephone numbers with labels.**
+favourite check, and one or more telephone numbers with labels.**
 
 Notes:
 
@@ -76,23 +76,23 @@ Confirmations:
 - Test that confirmation dialog is shown when clicked on delete button.
 - Test that contact is actually gone once the deletion is confirmed.
 
-**1.3. As a user I can check/uncheck a contact as favorite directly from the list view, edit view, or the detail view.**
+**1.3. As a user I can check/uncheck a contact as favourite directly from the list view, edit view, or the detail view.**
 
 Notes:
 
-- Favorite button acts like a checkbox but does not have to look like one.
+- favourite button acts like a checkbox but does not have to look like one.
 
 Confirmations:
 
-- Test that a contact checked as favorite is visible in the list of my favorites.
-- Test that contact checked as favorite has the check active on the list view, edit view, and detail view.
-- Test that previously favorite contact can be made not-favorite.
+- Test that a contact checked as favourite is visible in the list of my favourites.
+- Test that contact checked as favourite has the check active on the list view, edit view, and detail view.
+- Test that previously favourite contact can be made not-favourite.
 
 **1.4. As a user I can view my contacts in a list of all contacts and a list of my favourites.**
 
 Confirmations:
 
-- Test that by clicking on the favorite check it marks that contact as favorite.
+- Test that by clicking on the favourite check it marks that contact as favourite.
 - Test that by clicking on edit button an edit view is displayed for that contact.
 - Test that by clicking on delete button a delete confirmation dialog is displayed.
 - Test that first name, last name, profile photo, favourite check, edit button and delete button is displayed for each contact.
@@ -114,10 +114,10 @@ Confirmations:
 - Test that search terms can contact spaces.
 - Test that search terms longer than 255 characters are truncated.
 - Test that search terms are properly sanitised and escaped when displayed in the search box.
-- Test that search works in the same way on list of all contacts and my favorites.
+- Test that search works in the same way on list of all contacts and my favourites.
 
 **1.6. As a user I can access a read-only details view of a contact which includes the first name, last name,
-profile photo, email, favorite check, and one or more telephone numbers with labels.**
+profile photo, email, favourite check, and one or more telephone numbers with labels.**
 
 Notes:
 
