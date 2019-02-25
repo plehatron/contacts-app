@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+
+  php:
+    build:
+      context: docker/image/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/srv/app
+
+  node:
+    image: node:lts
+    volumes:
+      - ./:/usr/src/app
+
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+
+  http:
+    build:
+      context: docker/image/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker/image/nginx/default.conf.template:/etc/nginx/conf.d/default.template
+      - ./:/srv/app
+    depends_on:
+      - php
+    environment:
+      NGINX_HOST: contacts-app.localhost
+    ports:
+      - "8091:80"
