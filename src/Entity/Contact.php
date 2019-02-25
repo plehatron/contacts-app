@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Behaviours\Timestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,9 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="contact", indexes={
  *     @ORM\Index(columns={"first_name", "last_name", "email_address"}, flags={"fulltext"})})
  * })
+ * @ORM\HasLifecycleCallbacks()
  */
 class Contact
 {
+    use Timestamps;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -42,22 +46,14 @@ class Contact
     private $profilePhoto;
 
     /**
-     * @ORM\Column(name="favorite", type="boolean")
+     * @ORM\Column(name="favourite", type="boolean")
      */
-    private $favorite = false;
+    private $favourite = false;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact")
+     * @var ContactPhoneNumber[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact", cascade={"persist", "remove"})
      */
     private $phoneNumbers;
 
@@ -119,38 +115,14 @@ class Contact
         return $this;
     }
 
-    public function getFavorite(): ?bool
+    public function getFavourite(): ?bool
     {
-        return $this->favorite;
+        return $this->favourite;
     }
 
-    public function setFavorite(bool $favorite): self
+    public function setFavourite(bool $favourite): self
     {
-        $this->favorite = $favorite;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
+        $this->favourite = $favourite;
 
         return $this;
     }
@@ -158,7 +130,7 @@ class Contact
     /**
      * @return Collection|ContactPhoneNumber[]
      */
-    public function getPhoneNumbers(): Collection
+    public function getPhoneNumbers(): iterable
     {
         return $this->phoneNumbers;
     }

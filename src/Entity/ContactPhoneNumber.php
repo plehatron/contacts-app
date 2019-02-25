@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Behaviours\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 use libphonenumber\PhoneNumber;
 
@@ -10,9 +11,12 @@ use libphonenumber\PhoneNumber;
  * @ORM\Table(name="contact_phone_number", indexes={
  *     @ORM\Index(columns={"number", "label"}, flags={"fulltext"})})
  * })
+ * @ORM\HasLifecycleCallbacks()
  */
 class ContactPhoneNumber
 {
+    use Timestamps;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -35,16 +39,6 @@ class ContactPhoneNumber
      * @ORM\Column(name="label", type="string", length=255, nullable=true)
      */
     private $label;
-
-    /**
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -83,30 +77,6 @@ class ContactPhoneNumber
     public function setLabel(?string $label): self
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

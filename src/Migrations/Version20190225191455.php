@@ -31,7 +31,7 @@ final class Version20190225191455 extends AbstractMigration
             last_name VARCHAR(255) DEFAULT NULL, 
             email_address VARCHAR(255) DEFAULT NULL, 
             profile_photo VARCHAR(255) DEFAULT NULL, 
-            favorite TINYINT(1) NOT NULL, 
+            favourite TINYINT(1) NOT NULL, 
             created_at DATETIME NOT NULL, 
             updated_at DATETIME NOT NULL, 
             FULLTEXT INDEX IDX_4C62E638A9D1C132C808BA5AB08E074E (first_name, last_name, email_address),
