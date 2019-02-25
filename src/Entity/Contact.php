@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Behaviours\Timestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"="true"},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"="true"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  * @ORM\Table(name="contact", indexes={
  *     @ORM\Index(columns={"first_name", "last_name", "email_address"}, flags={"fulltext"})})
@@ -22,31 +30,41 @@ class Contact
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
+     * @Assert\Length(max=255)
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $firstName;
 
     /**
+     * @Assert\Length(max=255)@Groups({"read", "write"})
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $lastName;
 
     /**
+     * @Assert\Email
+     * @Assert\Length(max=255)
      * @ORM\Column(name="email_address", type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $emailAddress;
 
     /**
+     * @Groups({"read"})
      * @ORM\Column(name="profile_photo", type="string", length=255, nullable=true)
      */
     private $profilePhoto;
 
     /**
      * @ORM\Column(name="favourite", type="boolean")
+     * @Groups({"read", "write"})
      */
     private $favourite = false;
 
@@ -54,6 +72,8 @@ class Contact
      * @var ContactPhoneNumber[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact", cascade={"persist", "remove"})
+     * @Groups({"read", "write"})
+     * @MaxDepth(1)
      */
     private $phoneNumbers;
 
