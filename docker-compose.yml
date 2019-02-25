@@ -10,7 +10,9 @@ services:
       - ./:/srv/app
 
   node:
-    image: node:lts
+    build:
+      context: docker/image/node
+      dockerfile: Dockerfile
     volumes:
       - ./:/usr/src/app
 
