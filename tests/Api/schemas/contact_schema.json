@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "firstName",
+    "lastName",
+    "emailAddress",
+    "profilePhoto",
+    "favourite",
+    "phoneNumbers",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "firstName": {
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "lastName": {
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "emailAddress": {
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "profilePhoto": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "favourite": {
+      "type": "boolean"
+    },
+    "phoneNumbers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "number",
+          "label",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "label": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "createdAt": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "updatedAt": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          }
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "updatedAt": {
+      "type": "string",
+      "pattern": "^(.*)$"
+    }
+  }
+}

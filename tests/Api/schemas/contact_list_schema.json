@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "required": [
+    "hydra:member",
+    "hydra:totalItems"
+  ],
+  "properties": {
+    "hydra:member": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "emailAddress",
+          "profilePhoto",
+          "favourite",
+          "phoneNumbers",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "firstName": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "lastName": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "emailAddress": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "profilePhoto": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "favourite": {
+            "type": "boolean"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "contact",
+                "number",
+                "label",
+                "createdAt",
+                "updatedAt"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "number": {
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "label": {
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "updatedAt": {
+            "type": "string",
+            "pattern": "^(.*)$"
+          }
+        }
+      }
+    },
+    "hydra:totalItems": {
+      "type": "integer"
+    }
+  }
+}

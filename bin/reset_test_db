@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export APP_ENV=test
+bin/console doctrine:database:drop --force
+bin/console doctrine:database:create
+bin/console doctrine:migrations:migrate

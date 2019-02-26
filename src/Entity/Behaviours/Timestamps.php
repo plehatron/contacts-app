@@ -52,8 +52,7 @@ trait Timestamps
      */
     public function updateTimestamps()
     {
-        // Create a datetime with microseconds
-        $dateTime = new DateTimeImmutable('now');
+        $dateTime = DateTimeImmutable::createFromFormat('U', time());
         if (null === $this->createdAt) {
             $this->createdAt = $dateTime;
         }

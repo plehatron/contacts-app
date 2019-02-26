@@ -42,7 +42,7 @@ class Contact
     private $firstName;
 
     /**
-     * @Assert\Length(max=255)@Groups({"read", "write"})
+     * @Assert\Length(max=255)
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      * @Groups({"read", "write"})
      */
@@ -57,8 +57,8 @@ class Contact
     private $emailAddress;
 
     /**
-     * @Groups({"read"})
      * @ORM\Column(name="profile_photo", type="string", length=255, nullable=true)
+     * @Groups({"read"})
      */
     private $profilePhoto;
 
