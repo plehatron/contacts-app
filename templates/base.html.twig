@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Contacts App{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="/favicon.png">
+</head>
+<body>
+
+<div class="header container">
+    <div class="columns">
+        <div class="column col-8 col-mx-auto">
+            <header class="navbar">
+                <section class="navbar-section">
+                </section>
+                <section class="navbar-center">
+                    <h3>Contacts App</h3>
+                </section>
+                <section class="navbar-section">
+                </section>
+            </header>
+        </div>
+    </div>
+</div>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
 </html>

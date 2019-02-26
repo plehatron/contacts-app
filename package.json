@@ -1,6 +1,9 @@
 {
     "devDependencies": {
         "@symfony/webpack-encore": "^0.22.0",
+        "vue": "^2.6.7",
+        "vue-loader": "^15.6.4",
+        "vue-template-compiler": "^2.6.7",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
@@ -10,5 +13,9 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "spectre.css": "^0.5.8",
+        "whatwg-fetch": "^3.0.0"
     }
 }

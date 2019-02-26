@@ -380,6 +380,9 @@
     "symfony/stopwatch": {
         "version": "v4.2.3"
     },
+    "symfony/templating": {
+        "version": "v4.2.3"
+    },
     "symfony/test-pack": {
         "version": "v1.0.5"
     },

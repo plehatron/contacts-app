@@ -1,4 +1,14 @@
-require('../css/app.css');
+import Vue from 'vue';
+import App from './App.vue';
+import 'whatwg-fetch';
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
+import '../../node_modules/spectre.css/dist/spectre.css';
+import '../../node_modules/spectre.css/dist/spectre-icons.css';
+import '../../node_modules/spectre.css/dist/spectre-exp.css';
+import '../css/app.css';
+
+Vue.config.productionTip = false;
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app');
