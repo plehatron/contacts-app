@@ -125,11 +125,17 @@
     "facebook/webdriver": {
         "version": "1.6.0"
     },
+    "fzaninotto/faker": {
+        "version": "v1.8.0"
+    },
     "giggsey/libphonenumber-for-php": {
         "version": "8.10.6"
     },
     "giggsey/locale": {
         "version": "1.6"
+    },
+    "gumlet/php-image-resize": {
+        "version": "1.9.2"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"

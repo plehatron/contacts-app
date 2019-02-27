@@ -1,3 +1,5 @@
 index:
-    path: /
+    path: /{path}
     controller: App\Controller\DefaultController::index
+    requirements:
+        path: "(.+)?"

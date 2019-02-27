@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    media_source_path: '%kernel.project_dir%/media'
+    media_thumbnail_path: '%kernel.project_dir%/public/media'
+    media_url_path: '/media'
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +28,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Media\ImageThumbnailGenerator:
+        $sourcePath: '%media_source_path%'
+        $thumbnailPath: '%media_thumbnail_path%'
