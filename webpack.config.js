@@ -55,6 +55,8 @@ Encore
     //.addEntry('admin', './assets/js/admin.js')
 
     .enableVueLoader()
+
+    .enableVersioning()
 ;
 
 module.exports = Encore.getWebpackConfig();
