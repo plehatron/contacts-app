@@ -15,7 +15,7 @@
                 <div class="column">
                     <router-link
                             class="btn btn-link float-left"
-                            :to="{path: 'contacts', query: {favourites: 1}}"
+                            :to="{path: 'contacts', query: {favourites: 'true'}}"
                             tag="a"
                     >
                         My favourites
@@ -91,17 +91,40 @@
       };
     },
     mounted() {
-      this.$Progress.start();
-      fetch('/api/contacts').then(async response => {
-        let data = await response.json();
-        this.contacts = data['hydra:member'];
-        this.$Progress.finish();
-      }).catch(error => {
-        this.error = error.toString();
-        this.$Progress.fail();
-      });
+      this.fetchList();
+    },
+    watch: {
+      /**
+       * Watch for changes on favourites prop and render the list accordingly
+       *
+       * @param val
+       * @param oldVal
+       */
+      favourites: function(val, oldVal) {
+        this.fetchList();
+      },
     },
     methods: {
+      fetchList: function() {
+        this.$Progress.start();
+
+        let url = new URL('/api/contacts', window.location.protocol + '//' + window.location.host);
+        let params = {};
+        if (this.favourites) {
+          params.favourite = this.favourites === 'true' ? 'true' : 'false';
+        }
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+        fetch(url).then(async response => {
+          let data = await response.json();
+          this.contacts = data['hydra:member'];
+          this.$Progress.finish();
+
+        }).catch(error => {
+          this.error = error.toString();
+          this.$Progress.fail();
+        });
+      },
       confirmRemove: function(contact, index) {
         this.selectedForRemove = contact;
         this.selectedForRemoveIndex = index;

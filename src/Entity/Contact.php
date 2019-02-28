@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Behaviours\Timestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +16,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"="true"},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"="true"}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"="true"},
+ *     attributes={"order"={"firstName": "ASC"}}
+ * )
+ * @ApiFilter(
+ *     BooleanFilter::class,
+ *     properties={"favourite"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  * @ORM\Table(name="contact", indexes={
