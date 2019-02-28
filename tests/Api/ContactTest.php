@@ -28,6 +28,11 @@ class ContactTest extends WebTestCase
      */
     private $repository;
 
+    /**
+     * @var array
+     */
+    private $defaultClientServerHeaders;
+
     protected function setUp()
     {
         parent::setUp();
@@ -35,6 +40,11 @@ class ContactTest extends WebTestCase
         $kernel = self::bootKernel([]);
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
         $this->repository = $this->entityManager->getRepository(Contact::class);
+
+        $this->defaultClientServerHeaders = [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json',
+        ];
     }
 
     private function assertJsonValidSchema(string $data, string $schema)
@@ -90,10 +100,7 @@ class ContactTest extends WebTestCase
             '/api/contacts',
             [],
             [],
-            [
-                'CONTENT_TYPE' => 'application/ld+json',
-                'HTTP_ACCEPT' => 'application/ld+json',
-            ],
+            $this->defaultClientServerHeaders,
             <<<JSONLD
 {
   "firstName": "John",
@@ -129,10 +136,7 @@ JSONLD
             '/api/contacts',
             [],
             [],
-            [
-                'CONTENT_TYPE' => 'application/ld+json',
-                'HTTP_ACCEPT' => 'application/ld+json',
-            ],
+            $this->defaultClientServerHeaders,
             <<<JSONLD
 {
   "emailAddress": "notanemail",
@@ -195,10 +199,7 @@ JSONLD
             '/api/contacts/'.$contact->getId(),
             [],
             [],
-            [
-                'CONTENT_TYPE' => 'application/ld+json',
-                'HTTP_ACCEPT' => 'application/ld+json',
-            ],
+            $this->defaultClientServerHeaders,
             <<<JSONLD
 {
   "favourite": false
@@ -212,5 +213,41 @@ JSONLD
         $this->assertTrue($contact->getFavourite());
         $contact = $this->repository->findOneBy(['emailAddress' => 'joan.doe@example.org']);
         $this->assertFalse($contact->getFavourite());
+    }
+
+    public function testSearch()
+    {
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/api/contacts?query=Joan',
+            [],
+            [],
+            $this->defaultClientServerHeaders
+        );
+        $response = $client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $content = json_decode($response->getContent());
+        $this->assertEquals(1, $content->{'hydra:totalItems'});
+    }
+
+    public function testSearchTermWithSpaces()
+    {
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/api/contacts?query=joan%20doe',
+            [],
+            [],
+            $this->defaultClientServerHeaders
+        );
+        $response = $client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $content = json_decode($response->getContent());
+        $this->assertEquals(1, $content->{'hydra:totalItems'});
     }
 }

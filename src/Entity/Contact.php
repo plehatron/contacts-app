@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Behaviours\Timestamps;
+use App\Filter\ContactSearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,10 +20,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"="true"},
  *     attributes={"order"={"firstName": "ASC"}}
  * )
- * @ApiFilter(
- *     BooleanFilter::class,
- *     properties={"favourite"}
- * )
+ * @ApiFilter(ContactSearchFilter::class)
+ * @ApiFilter(BooleanFilter::class, properties={"favourite"})
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  * @ORM\Table(name="contact", indexes={
  *     @ORM\Index(columns={"first_name", "last_name", "email_address"}, flags={"fulltext"})})

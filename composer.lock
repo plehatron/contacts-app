@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40e174afd2e679d7716ef9d9f1b4d045",
+    "content-hash": "f9c1d030d50cef0be5fe29aff6289cc1",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -2085,16 +2085,16 @@
         },
         {
             "name": "psr/container",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+                "reference": "014d250daebff39eba15ba990eeb2a140798e77c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/014d250daebff39eba15ba990eeb2a140798e77c",
+                "reference": "014d250daebff39eba15ba990eeb2a140798e77c",
                 "shasum": ""
             },
             "require": {
@@ -2130,20 +2130,20 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2018-12-29T15:36:03+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+                "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
+                "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
                 "shasum": ""
             },
             "require": {
@@ -2152,7 +2152,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -2177,7 +2177,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-20T15:27:04+00:00"
+            "time": "2018-11-21T13:42:00+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -2554,7 +2554,7 @@
         },
         {
             "name": "symfony/contracts",
-            "version": "v1.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/contracts.git",
@@ -2678,16 +2678,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.2.3",
+            "version": "4.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "72c14cbc0c27706b9b4c33b9cd7a280972ff4806"
+                "reference": "cdadb3765df7c89ac93628743913b92bb91f1704"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/72c14cbc0c27706b9b4c33b9cd7a280972ff4806",
-                "reference": "72c14cbc0c27706b9b4c33b9cd7a280972ff4806",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/cdadb3765df7c89ac93628743913b92bb91f1704",
+                "reference": "cdadb3765df7c89ac93628743913b92bb91f1704",
                 "shasum": ""
             },
             "require": {
@@ -2747,7 +2747,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-30T17:51:38+00:00"
+            "time": "2019-02-23T15:17:42+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -3478,7 +3478,7 @@
         },
         {
             "name": "symfony/inflector",
-            "version": "v4.2.3",
+            "version": "4.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/inflector.git",
@@ -3623,16 +3623,16 @@
         },
         {
             "name": "symfony/property-access",
-            "version": "v4.2.3",
+            "version": "4.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-access.git",
-                "reference": "4768734a803c4471b7a733bd13698d91dd0cf193"
+                "reference": "d5e10532c51db0b657b1e25b2bd70acbcd13bbf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-access/zipball/4768734a803c4471b7a733bd13698d91dd0cf193",
-                "reference": "4768734a803c4471b7a733bd13698d91dd0cf193",
+                "url": "https://api.github.com/repos/symfony/property-access/zipball/d5e10532c51db0b657b1e25b2bd70acbcd13bbf9",
+                "reference": "d5e10532c51db0b657b1e25b2bd70acbcd13bbf9",
                 "shasum": ""
             },
             "require": {
@@ -3686,7 +3686,7 @@
                 "property path",
                 "reflection"
             ],
-            "time": "2019-01-16T20:31:39+00:00"
+            "time": "2019-02-23T15:17:42+00:00"
         },
         {
             "name": "symfony/property-info",
@@ -5801,7 +5801,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,

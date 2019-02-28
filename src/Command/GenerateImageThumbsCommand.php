@@ -35,7 +35,7 @@ class GenerateImageThumbsCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Generates image thumbnails from the media folder');
+        $this->setDescription('Generates image thumbnails from source media directory');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

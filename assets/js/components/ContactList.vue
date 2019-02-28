@@ -3,23 +3,21 @@
         <div class="filters container">
             <div class="columns">
                 <div class="column">
-                    <router-link
-                            class="btn btn-link float-right"
-                            :to="{path: 'contacts'}"
-                            tag="a"
+                    <a class="btn btn-link float-right"
+                       v-on:click="navigateRoute('contactListAll')"
+                       v-bind:class="{ active: isCurrentRoute('contactListAll') }"
                     >
                         All contacts
-                    </router-link>
+                    </a>
                 </div>
                 <div class="divider-vert"></div>
                 <div class="column">
-                    <router-link
-                            class="btn btn-link float-left"
-                            :to="{path: 'contacts', query: {favourites: 'true'}}"
-                            tag="a"
+                    <a class="btn btn-link float-left"
+                       v-on:click="navigateRoute('contactListFavourites')"
+                       v-bind:class="{ active: isCurrentRoute('contactListFavourites') }"
                     >
                         My favourites
-                    </router-link>
+                    </a>
                 </div>
             </div>
         </div>
@@ -28,8 +26,13 @@
             <div class="columns">
                 <div class="column col-4 col-mx-auto">
                     <div class="has-icon-left">
-                        <input type="text" class="form-input input-lg" placeholder="">
-                        <i class="form-icon icon icon-search"></i>
+                        <input v-on:keyup="searchDelayed"
+                               v-model="searchQueryData"
+                               type="text"
+                               class="form-input input-lg"
+                               placeholder="Search contacts..."
+                        >
+                        <i class="form-icon fas fa-search"></i>
                     </div>
                 </div>
             </div>
@@ -73,10 +76,10 @@
 <script>
   import ContactItem from './ContactItem.vue';
   import ConfirmDialog from './ConfirmDialog.vue';
+  import debounce from 'debounce';
 
   export default {
     name: 'ContactList',
-    props: ['favourites', 'searchQuery'],
     components: {
       ContactItem,
       ConfirmDialog,
@@ -88,32 +91,45 @@
         showConfirmDialog: false,
         selectedForRemove: null,
         selectedForRemoveIndex: null,
+        searchQueryData: null,
       };
     },
     mounted() {
+      this.searchQueryData = this.$route.query.query;
       this.fetchList();
     },
     watch: {
-      /**
-       * Watch for changes on favourites prop and render the list accordingly
-       *
-       * @param val
-       * @param oldVal
-       */
-      favourites: function(val, oldVal) {
-        this.fetchList();
-      },
+      '$route': 'fetchList',
     },
     methods: {
+      isCurrentRoute: function(routeName) {
+        return this.$route.name === routeName;
+      },
+      navigateRoute: function(routeName) {
+        if (this.searchQueryData) {
+          this.$router.push({name: routeName, query: {query: this.searchQueryData}});
+        } else {
+          this.$router.push({name: routeName});
+        }
+      },
+      getUrlParams: function() {
+        let urlParams = {};
+        if (this.$route.name === 'contactListFavourites') {
+          urlParams.favourite = 'true';
+        }
+        if (this.searchQueryData) {
+          urlParams.query = this.searchQueryData;
+        }
+        return urlParams;
+      },
       fetchList: function() {
+
         this.$Progress.start();
 
         let url = new URL('/api/contacts', window.location.protocol + '//' + window.location.host);
-        let params = {};
-        if (this.favourites) {
-          params.favourite = this.favourites === 'true' ? 'true' : 'false';
-        }
-        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+        let urlParams = this.getUrlParams();
+        Object.keys(urlParams).forEach(key => url.searchParams.append(key, urlParams[key]));
 
         fetch(url).then(async response => {
           let data = await response.json();
@@ -145,6 +161,12 @@
           this.$Progress.fail();
         });
       },
+      searchDelayed: debounce(function(e) {
+        this.search();
+      }, 800),
+      search: function() {
+        this.navigateRoute(this.$route.name);
+      },
     },
   };
 </script>
@@ -168,6 +190,14 @@
     .search {
         margin-bottom: 2rem;
         margin-top: 1.4rem;
+    }
+
+    .search .form-icon {
+        left: .5rem;
+    }
+
+    .search .has-icon-left .form-input {
+        padding-left: 2rem;
     }
 
     .contacts {

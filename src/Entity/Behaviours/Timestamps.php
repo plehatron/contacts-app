@@ -8,6 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * Reusable Timestamps behaviour for entities. It subscribes to PrePersist lifecycle event and automatically
+ * updates the createdAt and updatedAt fields.
+ *
+ * @package App\Entity\Behaviours
+ */
 trait Timestamps
 {
     /**

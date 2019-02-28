@@ -4,6 +4,11 @@ namespace App\Media;
 
 use Gumlet\ImageResize;
 
+/**
+ * Image thumbnail generator creates a thumbnail from the source directory and stores it in the thumbnail directory path.
+ *
+ * @package App\Media
+ */
 class ImageThumbnailGenerator
 {
     /**

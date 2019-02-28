@@ -15,17 +15,18 @@
     mode: 'history',
     base: '/',
     routes: [
-      {name: 'contactList', path: '/(contacts)?', component: ContactList, props: (route) => ({ favourites: route.query.favourites, searchQuery: route.query.query })},
+      {name: 'contactListAll', path: '/(contacts)?', component: ContactList},
+      {name: 'contactListFavourites', path: '/contacts/favourites', component: ContactList},
       {name: 'contactDetails', path: '/contacts/:id', props: true},
       {name: 'contactEdit', path: '/contacts/:id/edit', component: ContactEdit, props: true},
       {name: 'contactNew', path: '/contacts/new'},
-      {name: 'notFound', path: '*', component: NotFoundComponent }
+      {name: 'notFound', path: '*', component: NotFoundComponent},
     ],
     linkExactActiveClass: 'active',
   });
 
   export default {
     name: 'app',
-    router: router
+    router: router,
   };
 </script>
