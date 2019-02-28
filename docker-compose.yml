@@ -7,14 +7,14 @@ services:
       context: docker/image/php
       dockerfile: Dockerfile
     volumes:
-      - ./:/srv/app
+      - ./:/srv/app:delegated
 
   node:
     build:
       context: docker/image/node
       dockerfile: Dockerfile
     volumes:
-      - ./:/usr/src/app
+      - ./:/usr/src/app:delegated
 
   db:
     image: mysql:8
@@ -27,8 +27,8 @@ services:
       context: docker/image/nginx
       dockerfile: Dockerfile
     volumes:
-      - ./docker/image/nginx/default.conf.template:/etc/nginx/conf.d/default.template
-      - ./:/srv/app
+      - ./docker/image/nginx/default.conf.template:/etc/nginx/conf.d/default.template:delegated
+      - ./:/srv/app:delegated
     depends_on:
       - php
     environment:
