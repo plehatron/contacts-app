@@ -31,6 +31,7 @@
                                type="text"
                                class="form-input input-lg"
                                placeholder="Search contacts..."
+                               maxlength="100"
                         >
                         <i class="form-icon fas fa-search"></i>
                     </div>
@@ -210,6 +211,7 @@
         width: 100%;
         min-height: 170px;
         background-color: inherit;
+        cursor: pointer;
     }
 
     .contact.card .card-header {

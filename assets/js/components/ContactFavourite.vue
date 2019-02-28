@@ -1,6 +1,6 @@
 <template>
-    <button v-on:click="favourite"
-            class="btn btn-sm btn-action btn-favourite s-circle float-left"
+    <button v-on:click.stop="favourite"
+            :class="'btn btn-sm btn-action btn-favourite s-circle ' + floatClass"
             title="Favourite">
         <i v-if="contact.favourite" class="fas fa-heart"></i>
         <i v-else class="far fa-heart"></i>
@@ -10,7 +10,12 @@
 <script>
   export default {
     name: 'ContactFavourite',
-    props: ['contact'],
+    props: ['contact', 'float'],
+    data() {
+      return {
+        floatClass: this.float ? this.float : 'float-left',
+      };
+    },
     methods: {
       favourite: function() {
         this.contact.favourite = (!this.contact.favourite);

@@ -1,10 +1,14 @@
 <template>
-    <div class="contact card">
+    <router-link
+            class="contact card"
+            tag="div"
+            :to="{name: 'contactDetails', params: {id: contact.id}}"
+    >
         <div class="card-header">
 
-            <ContactFavourite v-bind:contact="contact" />
+            <ContactFavourite v-bind:contact="contact"/>
 
-            <button v-on:click="$emit('confirmRemove')"
+            <button v-on:click.stop="$emit('confirmRemove')"
                     class="btn btn-sm btn-action btn-delete s-circle float-right"
                     title="Delete">
                 <i class="far fa-trash-alt"></i>
@@ -15,7 +19,7 @@
                     :to="{name: 'contactEdit', params: {id: contact.id}}"
                     tag="button"
                     title="Edit"
-                >
+            >
                 <i class="far fa-edit"></i>
             </router-link>
 
@@ -28,7 +32,7 @@
             </figure>
             <div class="card-title h5 text-center">{{ contact.firstName }} {{ contact.lastName }}</div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>

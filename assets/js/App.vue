@@ -7,6 +7,7 @@
 
 <script>
   import ContactList from './components/ContactList.vue';
+  import ContactDetails from './components/ContactDetails.vue';
   import ContactEdit from './components/ContactEdit.vue';
   import NotFoundComponent from './components/NotFound.vue';
   import VueRouter from 'vue-router';
@@ -17,7 +18,7 @@
     routes: [
       {name: 'contactListAll', path: '/(contacts)?', component: ContactList},
       {name: 'contactListFavourites', path: '/contacts/favourites', component: ContactList},
-      {name: 'contactDetails', path: '/contacts/:id', props: true},
+      {name: 'contactDetails', path: '/contacts/:id', component: ContactDetails, props: true},
       {name: 'contactEdit', path: '/contacts/:id/edit', component: ContactEdit, props: true},
       {name: 'contactNew', path: '/contacts/new'},
       {name: 'notFound', path: '*', component: NotFoundComponent},
