@@ -18,9 +18,9 @@
     routes: [
       {name: 'contactListAll', path: '/(contacts)?', component: ContactList},
       {name: 'contactListFavourites', path: '/contacts/favourites', component: ContactList},
+      {name: 'contactNew', path: '/contacts/new', component: ContactEdit, props: true},
       {name: 'contactDetails', path: '/contacts/:id', component: ContactDetails, props: true},
       {name: 'contactEdit', path: '/contacts/:id/edit', component: ContactEdit, props: true},
-      {name: 'contactNew', path: '/contacts/new'},
       {name: 'notFound', path: '*', component: NotFoundComponent},
     ],
     linkExactActiveClass: 'active',

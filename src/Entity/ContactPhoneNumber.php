@@ -45,7 +45,7 @@ class ContactPhoneNumber
 
     /**
      * @AssertPhoneNumber
-     * @ORM\Column(name="number", type="phone_number")
+     * @ORM\Column(name="number", type="string", length=35)
      * @Groups({"read", "write"})
      */
     private $number;
@@ -74,12 +74,12 @@ class ContactPhoneNumber
         return $this;
     }
 
-    public function getNumber(): PhoneNumber
+    public function getNumber(): string
     {
         return $this->number;
     }
 
-    public function setNumber(PhoneNumber $number): self
+    public function setNumber(string $number): self
     {
         $this->number = $number;
 

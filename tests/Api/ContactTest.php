@@ -109,7 +109,7 @@ class ContactTest extends WebTestCase
   "favourite": false,
   "phoneNumbers": [
     {
-      "number": "+3851234567",
+      "number": "+385912345678",
       "label": "Home"
     }
   ]
@@ -213,6 +213,37 @@ JSONLD
         $this->assertTrue($contact->getFavourite());
         $contact = $this->repository->findOneBy(['emailAddress' => 'joan.doe@example.org']);
         $this->assertFalse($contact->getFavourite());
+    }
+
+    public function testSavePhoneNumbers()
+    {
+        $contact = $this->repository->findOneBy(['emailAddress' => 'joan.doe@example.org']);
+
+        /** @var Client $client */
+        $client = static::createClient();
+        $client->request(
+            'PUT',
+            '/api/contacts/'.$contact->getId(),
+            [],
+            [],
+            $this->defaultClientServerHeaders,
+            <<<JSONLD
+{
+  "phoneNumbers": [
+    {"number":"+385912345678","label":"Mobile"},
+    {"number":"+385918765432","label":"Home"}
+  ]
+}
+JSONLD
+        );
+        $response = $client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $data = json_decode($response->getContent());
+        $this->assertCount(2, $data->phoneNumbers);
+        $this->assertEquals('+385912345678', $data->phoneNumbers[0]->number);
+        $this->assertEquals('+385918765432', $data->phoneNumbers[1]->number);
     }
 
     public function testSearch()

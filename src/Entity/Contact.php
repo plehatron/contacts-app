@@ -77,7 +77,8 @@ class Contact
     /**
      * @var ContactPhoneNumber[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Groups({"read", "write"})
      * @MaxDepth(1)
      */
@@ -161,6 +162,13 @@ class Contact
         return $this->phoneNumbers;
     }
 
+    public function setPhoneNumbers($phoneNumbers): self
+    {
+        $this->phoneNumbers = new ArrayCollection($phoneNumbers);
+
+        return $this;
+    }
+
     public function addPhoneNumber(ContactPhoneNumber $phoneNumber): self
     {
         if (!$this->phoneNumbers->contains($phoneNumber)) {
@@ -180,7 +188,6 @@ class Contact
                 $phoneNumber->setContact(null);
             }
         }
-
         return $this;
     }
 }

@@ -20,17 +20,21 @@ body {
     margin-right: .5rem;
 }
 
+.footer {
+    padding: 2rem;
+}
+
 .avatar.avatar-xxl {
     font-size: 4rem;
     height: 10rem;
     width: 10rem;
 }
 
-.btn {
+.btn.btn-action {
     border-style: hidden;
     background-color: inherit;
 }
 
-.btn:hover {
+.btn.btn-action:hover {
     border-style: solid;
 }

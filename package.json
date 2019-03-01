@@ -17,6 +17,8 @@
     "dependencies": {
         "babel-polyfill": "^6.26.0",
         "debounce": "^1.2.0",
+        "lodash.get": "^4.4.2",
+        "lodash.set": "^4.3.2",
         "spectre.css": "^0.5.8",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.0.2",

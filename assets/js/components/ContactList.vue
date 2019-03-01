@@ -44,12 +44,16 @@
             <div class="columns">
                 <div class="contacts column col-8 col-mx-auto">
 
-                    <button class="contact card bnt-new-contact" title="Add New">
+                    <router-link
+                            class="contact card bnt-new-contact"
+                            :to="{name: 'contactNew'}"
+                            tag="button"
+                            title="Add New">
                         <div class="card-body">
                             <i class="fas fa-plus"></i>
                             <div class="card-title h5 text-center">Add New</div>
                         </div>
-                    </button>
+                    </router-link>
 
                     <ContactItem
                             v-for="(contact, index) in contacts"
