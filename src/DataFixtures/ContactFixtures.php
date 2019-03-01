@@ -13,6 +13,7 @@ class ContactFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create();
+        $phoneNumberUtil = PhoneNumberUtil::getInstance();
 
         $contact = new Contact();
         $contact->setFirstName('Joan');
@@ -21,7 +22,6 @@ class ContactFixtures extends Fixture
         $contact->setFavourite(true);
         $imageLocalPath = $faker->image(__DIR__ . '/../../media', 400, 400, 'people');
         $contact->setProfilePhoto(pathinfo($imageLocalPath, PATHINFO_BASENAME));
-        $phoneNumberUtil = PhoneNumberUtil::getInstance();
         $contact->addPhoneNumber(
             (new ContactPhoneNumber())
                 ->setNumber($phoneNumberUtil->parse('+38591234567'))
@@ -37,13 +37,16 @@ class ContactFixtures extends Fixture
             $contact->setFavourite($faker->randomElement([true, false]));
             $imageLocalPath = $faker->image(__DIR__ . '/../../media', 400, 400, 'people');
             $contact->setProfilePhoto(pathinfo($imageLocalPath, PATHINFO_BASENAME));
-            $phoneNumberUtil = PhoneNumberUtil::getInstance();
-            $fakePhoneNumber = $faker->phoneNumber;
-            $contact->addPhoneNumber(
-                (new ContactPhoneNumber())
-                    ->setNumber($phoneNumberUtil->parse($fakePhoneNumber, 'HR'))
-                    ->setLabel($faker->randomElement(['Home', 'Work', 'Mobile']))
-            );
+            $labels = ['Home', 'Work', 'Mobile', 'Cell', 'Relative'];
+            shuffle($labels);
+            for ($pn = 1; $pn <= $faker->numberBetween(1, 5); $pn++) {
+                $fakePhoneNumber = $faker->phoneNumber;
+                $contact->addPhoneNumber(
+                    (new ContactPhoneNumber())
+                        ->setNumber($phoneNumberUtil->parse($fakePhoneNumber, 'HR'))
+                        ->setLabel(array_pop($labels))
+                );
+            }
             $manager->persist($contact);
         }
 

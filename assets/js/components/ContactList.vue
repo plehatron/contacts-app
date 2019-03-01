@@ -239,15 +239,6 @@
         bottom: .8rem;
     }
 
-    .contact .btn {
-        border-style: hidden;
-        background-color: inherit;
-    }
-
-    .contact .btn:hover {
-        border-style: solid;
-    }
-
     .contact.card .btn-edit {
         margin-right: .6rem;
     }

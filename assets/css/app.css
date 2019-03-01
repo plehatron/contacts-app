@@ -2,13 +2,35 @@ body {
     background-color: #f7f8f9;
 }
 
+
+.logo a {
+    color: #3b4351;
+}
+
+.logo a:hover {
+    text-decoration: none;
+}
+
 .header {
     margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.header i {
+    margin-right: .5rem;
 }
 
 .avatar.avatar-xxl {
     font-size: 4rem;
     height: 10rem;
     width: 10rem;
+}
+
+.btn {
+    border-style: hidden;
+    background-color: inherit;
+}
+
+.btn:hover {
+    border-style: solid;
 }
