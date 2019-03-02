@@ -1,10 +1,12 @@
 <template>
-    <button v-on:click.stop="favourite"
-            :class="'btn btn-sm btn-action btn-favourite s-circle ' + floatClass"
-            title="Favourite">
-        <i v-if="contact.favourite" class="fas fa-heart"></i>
-        <i v-else class="far fa-heart"></i>
-    </button>
+    <div class="favourite-container">
+        <button v-on:click.stop="favourite"
+                :class="'btn btn-sm btn-action btn-favourite s-circle ' + floatClass"
+                title="Favourite">
+            <i v-if="contact.favourite" class="fas fa-heart"></i>
+            <i v-else class="far fa-heart"></i>
+        </button>
+    </div>
 </template>
 
 <script>
@@ -21,6 +23,7 @@
         this.contact.favourite = (!this.contact.favourite);
 
         this.$Progress.start();
+        this.error = null;
         let data = {
           favourite: this.contact.favourite,
         };
@@ -32,11 +35,13 @@
           },
           body: JSON.stringify(data),
         }).then(async response => {
+          if (!response.ok) {
+            this.error = await response.json();
+          }
           this.$Progress.finish();
         }).catch(error => {
           this.$Progress.fail();
         });
-
       },
     },
   };

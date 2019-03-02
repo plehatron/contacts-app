@@ -139,6 +139,8 @@ JSONLD
             $this->defaultClientServerHeaders,
             <<<JSONLD
 {
+  "firstName": "John",
+  "lastName": "Doe",
   "emailAddress": "notanemail",
   "favourite": false
 }
@@ -148,24 +150,8 @@ JSONLD
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson($response->getContent());
-        $this->assertJsonStringEqualsJsonString(
-            <<<'JSONLD'
-{  
-   "@context":"/api/contexts/ConstraintViolationList",
-   "@type":"ConstraintViolationList",
-   "hydra:title":"An error occurred",
-   "hydra:description":"emailAddress: This value is not a valid email address.",
-   "violations":[  
-      {  
-         "propertyPath":"emailAddress",
-         "message":"This value is not a valid email address."
-      }
-   ]
-}
-JSONLD
-            ,
-            $response->getContent()
-        );
+        $data = json_decode($response->getContent());
+        $this->assertEquals('emailAddress: This value is not a valid email address.', $data->{'hydra:description'});
     }
 
     public function testDeleteContact()
@@ -208,7 +194,7 @@ JSONLD
         );
         $response = $client->getResponse();
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertJson($response->getContent());
         $this->assertTrue($contact->getFavourite());
         $contact = $this->repository->findOneBy(['emailAddress' => 'joan.doe@example.org']);

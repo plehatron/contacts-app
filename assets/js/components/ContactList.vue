@@ -99,7 +99,7 @@
         searchQueryData: null,
       };
     },
-    mounted() {
+    created() {
       this.searchQueryData = this.$route.query.query;
       this.fetchList();
     },

@@ -42,6 +42,7 @@ class Contact
 
     /**
      * @Assert\Length(max=255)
+     * @Assert\NotBlank
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      * @Groups({"read", "write"})
      */
@@ -49,6 +50,7 @@ class Contact
 
     /**
      * @Assert\Length(max=255)
+     * @Assert\NotBlank
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      * @Groups({"read", "write"})
      */

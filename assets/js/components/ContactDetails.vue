@@ -44,7 +44,7 @@
 
                     <div class="details-body">
 
-                        <div class="columns">
+                        <div v-if="contact.emailAddress" class="columns">
                             <div class="column col-pad col-4">
                                 <span class="text-grayer"><i class="fas fa-envelope"></i> Email</span>
                             </div>
@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="columns">
+                        <div v-if="contact.phoneNumbers.length > 0" class="columns">
                             <div class="column col-pad col-4">
                                 <span class="text-grayer"><i class="fas fa-phone-square"></i> Numbers</span>
                             </div>
@@ -83,7 +83,6 @@
 
   export default {
     name: 'ContactDetails',
-    props: ['id'],
     components: {
       ContactFavourite,
     },
@@ -93,12 +92,18 @@
         error: null,
       };
     },
-    mounted() {
+    computed: {
+      id() {
+        return this.$route.params.id;
+      },
+    },
+    created() {
       this.fetchItem();
     },
     methods: {
       fetchItem: function() {
         this.$Progress.start();
+        this.error = null;
         let url = '/api/contacts/' + this.id;
         fetch(url).then(async response => {
           if (response.status !== 200) {

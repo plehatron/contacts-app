@@ -1,6 +1,9 @@
 <template>
     <div id="app" class="container">
         <vue-progress-bar></vue-progress-bar>
+        <!--<keep-alive :include="['ContactEdit', 'ContactDetails']" :exclude="['ContactList']">
+            <router-view :key="$route.fullPath"></router-view>
+        </keep-alive>-->
         <router-view></router-view>
     </div>
 </template>
@@ -18,9 +21,9 @@
     routes: [
       {name: 'contactListAll', path: '/(contacts)?', component: ContactList},
       {name: 'contactListFavourites', path: '/contacts/favourites', component: ContactList},
-      {name: 'contactNew', path: '/contacts/new', component: ContactEdit, props: true},
-      {name: 'contactDetails', path: '/contacts/:id', component: ContactDetails, props: true},
-      {name: 'contactEdit', path: '/contacts/:id/edit', component: ContactEdit, props: true},
+      {name: 'contactNew', path: '/contacts/new', component: ContactEdit},
+      {name: 'contactEdit', path: '/contacts/:id/edit', component: ContactEdit},
+      {name: 'contactDetails', path: '/contacts/:id', component: ContactDetails},
       {name: 'notFound', path: '*', component: NotFoundComponent},
     ],
     linkExactActiveClass: 'active',

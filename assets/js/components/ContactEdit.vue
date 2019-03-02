@@ -27,7 +27,7 @@
                             <router-link
                                     v-if="id"
                                     class="btn btn-sm btn-action btn-back s-circle"
-                                    :to="{name: 'contactDetails', props: {id: id}}"
+                                    :to="{name: 'contactDetails', params: {id: id}}"
                                     tag="button"
                                     title="Back to contact details"
                                     type="button">
@@ -36,7 +36,7 @@
                             <router-link
                                     v-else
                                     class="btn btn-sm btn-action btn-back s-circle"
-                                    :to="{name: 'contactList'}"
+                                    :to="{name: 'contactListAll'}"
                                     tag="button"
                                     title="Back all contacts"
                                     type="button">
@@ -98,6 +98,7 @@
                         <div class="edit-phone-numbers">
                             <ContactEditPhoneNumber
                                     v-for="(phoneNumber, index) in contact.phoneNumbers"
+                                    :key="phoneNumber.id"
                                     v-bind:phoneNumber="phoneNumber"
                                     v-on:removePhoneNumber="removePhoneNumber(phoneNumber, index)"
                             />
@@ -141,7 +142,6 @@
 
   export default {
     name: 'ContactEdit',
-    props: ['id'],
     components: {
       ContactEditPhoneNumber,
     },
@@ -163,6 +163,11 @@
         error: null,
         submitError: null,
       };
+    },
+    computed: {
+      id () {
+        return this.$route.params.id
+      }
     },
     created() {
       this.fetchItem();
@@ -248,7 +253,7 @@
           let data = await response.json();
 
           if (response.ok) {
-            this.$router.push({path: '/contacts/' + data.id});
+            this.$router.push({name: 'contactDetails', params: {id: data.id}});
           } else if ('violations' in data) {
             this.handleValidationViolations(data);
           } else {
