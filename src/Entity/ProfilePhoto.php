@@ -48,7 +48,7 @@ class ProfilePhoto
      * @var File|null
      * @Vich\UploadableField(mapping="profile_photo", fileNameProperty="fileName")
      * @Assert\File(
-     *     maxSize = "5M",
+     *     maxSize = "10M",
      *     mimeTypes = {"image/png", "image/jpeg"}
      * )
      */
