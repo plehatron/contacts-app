@@ -26,6 +26,8 @@ RUN pecl install \
     xdebug-beta
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY conf.d/* /usr/local/etc/php/conf.d/
 COPY ./entrypoint.sh /entrypoint.sh
 
