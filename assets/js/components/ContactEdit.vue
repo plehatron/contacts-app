@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="column col-1">
-                            <button v-on:click.stop="confirmRemove"
+                            <button v-if="id" v-on:click.stop="confirmRemove"
                                     class="btn btn-sm btn-action btn-delete s-circle"
                                     title="Delete"
                                     type="button">
