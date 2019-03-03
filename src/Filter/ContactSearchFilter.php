@@ -53,16 +53,27 @@ class ContactSearchFilter extends AbstractContextAwareFilter
 
         $queryBuilder->leftJoin($rootAlias.'.phoneNumbers', 'pn');
 
+        $searchColumns = [
+            $rootAlias.'.firstName' => ['searchTermStart', 'searchTermWord'],
+            $rootAlias.'.lastName' => ['searchTermStart', 'searchTermWord'],
+            $rootAlias.'.emailAddress' => ['searchTermPartial'],
+            'pn.number' => ['searchTermPartial'],
+            'pn.label' => ['searchTermPartial'],
+        ];
+
         foreach ($searchTerms as $num => $searchTerm) {
 
-            $orX = $queryBuilder->expr()->orX(
-                $queryBuilder->expr()->like($rootAlias.'.firstName', ':searchTermStart'.$num),
-                $queryBuilder->expr()->like($rootAlias.'.lastName', ':searchTermStart'.$num),
-                $queryBuilder->expr()->like($rootAlias.'.emailAddress', ':searchTermPartial'.$num),
-                $queryBuilder->expr()->like('pn.number', ':searchTermPartial'.$num),
-                $queryBuilder->expr()->like('pn.label', ':searchTermStart'.$num)
-            );
+            $likeStatements = [];
+            foreach ($searchColumns as $searchColumn => $parameters) {
+                foreach ($parameters as $parameter) {
+                    $likeStatements[] = $queryBuilder->expr()->like($searchColumn, ':'.$parameter.$num);
+                }
+            }
+
+            $orX = $queryBuilder->expr()->orX(...$likeStatements);
+
             $queryBuilder->setParameter('searchTermStart'.$num, $searchTerm.'%');
+            $queryBuilder->setParameter('searchTermWord'.$num, '% '.$searchTerm.'%');
             $queryBuilder->setParameter('searchTermPartial'.$num, '%'.$searchTerm.'%');
 
             $queryBuilder->andWhere($orX);
