@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="column col-1">
-                            <button v-on:click.stop="$emit('confirmRemove')"
+                            <button v-on:click.stop="confirmRemove"
                                     class="btn btn-sm btn-action btn-delete s-circle"
                                     title="Delete"
                                     type="button">
@@ -142,18 +142,27 @@
                 </div>
             </form>
         </div>
+
+        <ConfirmDialog
+                v-if="showConfirmDialog"
+                v-bind:title="'Delete contact \'' + contact.firstName + ' ' + contact.lastName + '\'?'"
+                v-bind:actionTitle="'Delete'"
+                v-on:confirm="remove()"
+                v-on:cancel="showConfirmDialog = false"
+        />
     </div>
 </template>
 
 <script>
   import ContactEditPhoneNumber from './ContactEditPhoneNumber';
-  import get from 'lodash.get';
+  import ConfirmDialog from './ConfirmDialog';
   import set from 'lodash.set';
 
   export default {
     name: 'ContactEdit',
     components: {
       ContactEditPhoneNumber,
+      ConfirmDialog
     },
     data() {
       return {
@@ -175,6 +184,7 @@
         profilePhotoLoading: false,
         error: null,
         submitError: null,
+        showConfirmDialog: false
       };
     },
     computed: {
@@ -358,6 +368,29 @@
           });
 
         }
+      },
+      confirmRemove: function() {
+        this.showConfirmDialog = true;
+      },
+      remove: function() {
+        this.showConfirmDialog = false;
+        this.$Progress.start();
+        fetch('/api/contacts/' + this.contact.id, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/ld+json',
+          },
+        }).then(async response => {
+          this.$Progress.finish();
+          if (response.ok) {
+            this.$router.push({name: 'contactListAll'});
+          } else {
+            let data = await response.json();
+            this.submitError = data['hydra:description'];
+          }
+        }).catch(error => {
+          this.$Progress.fail();
+        });
       },
     },
   };
