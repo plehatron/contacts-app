@@ -25,7 +25,7 @@ Vue.use(VueProgressBar, {
 Vue.mixin({
   data: function() {
     return {
-      mediaPath: APP_MEDIA_PATH
+      profilePhotoPath: APP_MEDIA_PATH + '/profile-photos'
     }
   }
 });

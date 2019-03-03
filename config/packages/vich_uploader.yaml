@@ -1,0 +1,7 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        profile_photo:
+            uri_prefix: /profile-photos
+            upload_destination: '%kernel.project_dir%/media/profile-photos'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

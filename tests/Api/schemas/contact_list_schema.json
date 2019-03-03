@@ -39,8 +39,21 @@
           "profilePhoto": {
             "type": [
               "null",
-              "string"
-            ]
+              "object"
+            ],
+            "required": [
+              "id",
+              "fileName"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "fileName": {
+                "type": "string",
+                "pattern": "^(.*)$"
+              }
+            }
           },
           "favourite": {
             "type": "boolean"

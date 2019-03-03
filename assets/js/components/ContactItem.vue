@@ -28,7 +28,7 @@
             <figure :data-initial="contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()"
                     class="avatar avatar-xl p-centered"
                     style="background-color: #5755d9;">
-                <img v-if="contact.profilePhoto" :src="mediaPath + '/' + contact.profilePhoto ">
+                <img v-if="contact.profilePhoto" :src="profilePhotoPath + '/' + contact.profilePhoto.fileName">
             </figure>
             <div class="card-title h5 text-center">{{ contact.firstName }} {{ contact.lastName }}</div>
         </div>

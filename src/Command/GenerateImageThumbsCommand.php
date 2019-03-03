@@ -43,16 +43,12 @@ class GenerateImageThumbsCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Generating image thumbnails...');
 
-        $fs = new Filesystem();
-        if (false === $fs->exists($this->thumbnailGenerator->getThumbnailPath())) {
-            $fs->mkdir($this->thumbnailGenerator->getThumbnailPath());
-            $io->note(sprintf('Created missing directory %s', $this->thumbnailGenerator->getThumbnailPath()));
-        }
-
         /** @var Contact[] $contacts */
         $contacts = $this->entityManager->getRepository(Contact::class)->findAll();
         foreach ($contacts as $contact) {
-            $thumbnailPath = $this->thumbnailGenerator->generate($contact->getProfilePhoto(), 200, 200);
+            $thumbnailPath = $this->thumbnailGenerator->generate(
+                'profile-photos/'.$contact->getProfilePhoto()->getFileName()
+            );
             $io->writeln($thumbnailPath);
         }
 

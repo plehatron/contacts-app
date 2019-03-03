@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Behaviours\Timestamps;
 use App\Filter\ContactSearchFilter;
@@ -65,8 +66,10 @@ class Contact
     private $emailAddress;
 
     /**
-     * @ORM\Column(name="profile_photo", type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @var ProfilePhoto|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\ProfilePhoto", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"read", "write"})
      */
     private $profilePhoto;
 
@@ -132,12 +135,12 @@ class Contact
         return $this;
     }
 
-    public function getProfilePhoto(): ?string
+    public function getProfilePhoto(): ?ProfilePhoto
     {
         return $this->profilePhoto;
     }
 
-    public function setProfilePhoto(?string $profilePhoto): self
+    public function setProfilePhoto(?ProfilePhoto $profilePhoto): self
     {
         $this->profilePhoto = $profilePhoto;
 

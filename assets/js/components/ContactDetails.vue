@@ -7,7 +7,7 @@
                     <figure :data-initial="contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()"
                             class="avatar avatar-xxl"
                             style="background-color: #5755d9;">
-                        <img v-if="contact.profilePhoto" :src="mediaPath + '/' + contact.profilePhoto ">
+                        <img v-if="contact.profilePhoto" :src="profilePhotoPath + '/' + contact.profilePhoto.fileName">
                     </figure>
                 </div>
 

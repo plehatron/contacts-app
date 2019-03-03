@@ -11,11 +11,14 @@
                     <input type="file"
                            class="input-file"
                            id="input-photo-upload"
-                           v-on:change="displayPhoto"
+                           v-on:change="uploadProfilePhoto"
                            accept=".jpg,.png">
-                    <label class="avatar avatar-xxl photo-upload" for="input-photo-upload">
+                    <label class="avatar avatar-xxl photo-upload"
+                           v-bind:class="{'loading loading-lg': profilePhotoLoading}"
+                           for="input-photo-upload">
                         <i class="fas fa-upload"></i>
-                        <img id="photo-preview">
+                        <img id="photo-preview"
+                             :src="profilePhoto ? profilePhotoPath + '/' + profilePhoto.fileName : false">
                     </label>
                 </div>
 
@@ -121,7 +124,14 @@
 
                         <div class="columns">
                             <div class="column col-6">
-                                <button type="button" class="btn btn-cancel float-left">Cancel</button>
+                                <router-link
+                                        class="btn btn-cancel float-left"
+                                        :to="{name: 'contactDetails', params: {id: this.id}}"
+                                        tag="button"
+                                        title="Cancel edit"
+                                        type="button">
+                                    Cancel
+                                </router-link>
                             </div>
                             <div class="column col-6">
                                 <button class="btn btn-primary btn-save float-right" type="submit">Save</button>
@@ -152,6 +162,7 @@
           firstName: '',
           lastName: '',
           emailAddress: '',
+          profilePhoto: null, // ProfilePhoto IRI from @id
           phoneNumbers: [],
           _validation: {
             firstName: null,
@@ -159,15 +170,17 @@
             emailAddress: null,
           },
         },
+        profilePhoto: null, // full ProfilePhoto object
         loading: true,
+        profilePhotoLoading: false,
         error: null,
         submitError: null,
       };
     },
     computed: {
-      id () {
-        return this.$route.params.id
-      }
+      id() {
+        return this.$route.params.id;
+      },
     },
     created() {
       this.fetchItem();
@@ -198,6 +211,10 @@
             this.contact.firstName = data.firstName;
             this.contact.lastName = data.lastName;
             this.contact.emailAddress = data.emailAddress;
+            if (data.profilePhoto) {
+              this.contact.profilePhoto = data.profilePhoto['@id'];
+              this.profilePhoto = data.profilePhoto;
+            }
             this.contact.phoneNumbers = [];
             data.phoneNumbers.forEach((pn) => {
               this.contact.phoneNumbers.push(this.getPhoneNumberModel(pn.id, pn.number, pn.label));
@@ -297,14 +314,49 @@
       removePhoneNumber(phoneNumber, index) {
         this.contact.phoneNumbers.splice(index, 1);
       },
-      displayPhoto() {
+      uploadProfilePhoto() {
         let input = document.querySelector('#input-photo-upload');
         if (input.files && input.files[0]) {
+
+          this.$Progress.start();
+          this.profilePhotoLoading = true;
+
           let reader = new FileReader();
           reader.onload = function(e) {
             document.querySelector('#photo-preview').src = e.target.result;
           };
           reader.readAsDataURL(input.files[0]);
+
+          let formData = new FormData();
+          formData.append('file', input.files[0]);
+
+          fetch('/api/profile-photos', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/ld+json',
+            },
+            body: formData,
+          }).then(async response => {
+
+            let data = await response.json();
+
+            if (response.ok) {
+              this.contact.profilePhoto = data['@id'];
+              this.profilePhoto = data;
+            } else {
+              this.submitError = data['hydra:description'];
+            }
+
+            this.$Progress.finish();
+            this.profilePhotoLoading = false;
+
+          }).catch(error => {
+            this.error = error.toString();
+
+            this.$Progress.finish();
+            this.profilePhotoLoading = false;
+          });
+
         }
       },
     },
@@ -394,5 +446,11 @@
 
     .photo-upload {
         cursor: pointer;
+    }
+
+    .photo-upload.loading::after {
+        border-color: #fff;
+        border-right-color: transparent;
+        border-top-color: transparent;
     }
 </style>

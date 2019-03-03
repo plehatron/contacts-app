@@ -7,6 +7,8 @@ parameters:
     media_source_path: '%kernel.project_dir%/media'
     media_thumbnail_path: '%kernel.project_dir%/public/media'
     media_url_path: '/media'
+    media_default_width: 200
+    media_default_height: 200
 
 services:
     # default configuration for services in *this* file
@@ -32,3 +34,5 @@ services:
     App\Media\ImageThumbnailGenerator:
         $sourcePath: '%media_source_path%'
         $thumbnailPath: '%media_thumbnail_path%'
+        $width: '%media_default_width%'
+        $height: '%media_default_height%'
