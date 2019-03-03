@@ -90,7 +90,7 @@ Docker with Docker Compose is used for running the whole stack. Four containers 
 ## Backend
 
 Backend app uses Symfony with API Platform framework to provide an REST API for the frontend part of the application.
-API Platform was chosen because it offers a number of benefits, including:
+API Platform was chosen because of it's numerous benefits, including:
 - Easy to extend entities with new properties, changes are propagated automatically.
 - [OpenAPI](https://swagger.io/docs/specification/about/) (Swagger) documentation is generated automatically.
 - Support for JSON-LD with deprecations that enable 
@@ -101,12 +101,13 @@ Source files of the backend app can be found in the `config/`, `src/`, `template
 ## Database and search engine
 
 MySQL database, particularly version 8, is used because of its native fulltext support for InnoDB type tables. 
-This was chosen over Elasticsearch server mainly to reduce the memory consumption on the 
+This was chosen over Elasticsearch server mainly to reduce the memory consumption on the production
 VM server, and because the number of users is currently unknown, so a simpler solution and stack is enough for now.
 
 ## Tests
 
-Backend is covered with functional tests since most of the backend logic is handled by the API Platform.
+Backend is covered with functional tests since most of the backend logic is handled by the API Platform. JSON schema
+files are used to validation REST API responses where appropriate.
 
 Run the tests with command:
 ```bash
@@ -128,7 +129,7 @@ There is no user authentication. It is assumed that there is only one applicatio
 
 ## User Roles
 
-- User - a single actor of the application. Someone who uses the application to store and organise its contacts.
+- `User` - a single actor of the application. Someone who uses the application to store and organise its contacts.
 
 ## User Stories
 
