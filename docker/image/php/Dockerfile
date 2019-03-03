@@ -25,7 +25,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN pecl install \
     xdebug-beta
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.8 /usr/bin/composer /usr/bin/composer
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY conf.d/* /usr/local/etc/php/conf.d/
