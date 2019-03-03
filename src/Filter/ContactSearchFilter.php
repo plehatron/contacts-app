@@ -14,13 +14,7 @@ use Doctrine\ORM\QueryBuilder;
 class ContactSearchFilter extends AbstractContextAwareFilter
 {
     /**
-     * Passes a property through the filter.
-     *
-     * @param QueryBuilder $queryBuilder
-     * @param QueryNameGeneratorInterface $queryNameGenerator
-     * @param string $resourceClass
-     * @param string|null $operationName
-     * @param array $context
+     * {@inheritdoc}
      */
     public function apply(
         QueryBuilder $queryBuilder,
@@ -81,25 +75,7 @@ class ContactSearchFilter extends AbstractContextAwareFilter
     }
 
     /**
-     * Gets the description of this filter for the given resource.
-     *
-     * Returns an array with the filter parameter names as keys and array with the following data as values:
-     *   - property: the property where the filter is applied
-     *   - type: the type of the filter
-     *   - required: if this filter is required
-     *   - strategy: the used strategy
-     *   - is_collection (optional): is this filter is collection
-     *   - swagger (optional): additional parameters for the path operation,
-     *     e.g. 'swagger' => [
-     *       'description' => 'My Description',
-     *       'name' => 'My Name',
-     *       'type' => 'integer',
-     *     ]
-     * The description can contain additional data specific to a filter.
-     *
-     * @see \ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer::getFiltersParameters
-     * @param string $resourceClass
-     * @return array
+     * {@inheritdoc}
      */
     public function getDescription(string $resourceClass): array
     {
@@ -116,13 +92,7 @@ class ContactSearchFilter extends AbstractContextAwareFilter
     }
 
     /**
-     * Passes a property through the filter.
-     * @param string $property
-     * @param $value
-     * @param QueryBuilder $queryBuilder
-     * @param QueryNameGeneratorInterface $queryNameGenerator
-     * @param string $resourceClass
-     * @param string|null $operationName
+     * {@inheritdoc}
      */
     protected function filterProperty(
         string $property,
