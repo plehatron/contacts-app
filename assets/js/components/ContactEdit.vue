@@ -125,8 +125,18 @@
                         <div class="columns">
                             <div class="column col-6">
                                 <router-link
+                                        v-if="id"
                                         class="btn btn-cancel float-left"
                                         :to="{name: 'contactDetails', params: {id: this.id}}"
+                                        tag="button"
+                                        title="Cancel edit"
+                                        type="button">
+                                    Cancel
+                                </router-link>
+                                <router-link
+                                        v-else
+                                        class="btn btn-cancel float-left"
+                                        :to="{name: 'contactListAll'}"
                                         tag="button"
                                         title="Cancel edit"
                                         type="button">
