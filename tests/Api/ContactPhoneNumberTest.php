@@ -7,6 +7,29 @@ use Symfony\Component\BrowserKit\Client;
 
 class ContactPhoneNumberTest extends WebTestCase
 {
+    use AssertJsonValidSchema;
+
+    public function testGet()
+    {
+        /** @var Client $client */
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/api/phone-numbers',
+            [],
+            [],
+            [
+                'HTTP_ACCEPT' => 'application/ld+json',
+            ]
+        );
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonValidSchema(
+            $client->getResponse()->getContent(),
+            file_get_contents(__DIR__.'/schemas/contact_phone_number_schema.json')
+        );
+    }
+
     public function testPhoneNumberAssertion()
     {
         /** @var Client $client */

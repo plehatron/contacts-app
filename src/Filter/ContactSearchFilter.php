@@ -93,6 +93,7 @@ class ContactSearchFilter extends AbstractContextAwareFilter
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     protected function filterProperty(
         string $property,

@@ -18,6 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ContactTest extends WebTestCase
 {
+    use AssertJsonValidSchema;
+
     /**
      * @var EntityManager
      */
@@ -45,26 +47,6 @@ class ContactTest extends WebTestCase
             'CONTENT_TYPE' => 'application/ld+json',
             'HTTP_ACCEPT' => 'application/ld+json',
         ];
-    }
-
-    private function assertJsonValidSchema(string $data, string $schema)
-    {
-        $data = json_decode($data);
-        $validator = new \JsonSchema\Validator();
-        $isNotValid = $validator->validate($data, json_decode($schema));
-        $errors = $validator->getErrors();
-        $errorMessage = array_reduce(
-            $errors,
-            function ($carry, $item) {
-                return $carry."\n".sprintf(
-                        "Property %s (%s) invalid: %s",
-                        $item['property'],
-                        $item['pointer'],
-                        $item['message']
-                    );
-            }
-        );
-        $this->assertEquals(0, $isNotValid, $errorMessage);
     }
 
     public function testGetContacts()

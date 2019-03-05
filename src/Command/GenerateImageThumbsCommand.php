@@ -46,9 +46,12 @@ class GenerateImageThumbsCommand extends Command
         /** @var Contact[] $contacts */
         $contacts = $this->entityManager->getRepository(Contact::class)->findAll();
         foreach ($contacts as $contact) {
-            $thumbnailPath = $this->thumbnailGenerator->generate(
-                'profile-photos/'.$contact->getProfilePhoto()->getFileName()
-            );
+            $sourceFilePath = 'profile-photos/'.$contact->getProfilePhoto()->getFileName();
+            if (false === file_exists($sourceFilePath)) {
+                $io->note(sprintf('Source file %s does not exist', $sourceFilePath));
+                continue;
+            }
+            $thumbnailPath = $this->thumbnailGenerator->generate($sourceFilePath);
             $io->writeln($thumbnailPath);
         }
 

@@ -42,4 +42,33 @@ class ProfilePhotoTest extends WebTestCase
         $this->assertNotEmpty($data->fileName);
         $this->assertEquals('ProfilePhoto', $data->{'@type'});
     }
+
+    public function testInvalidFile()
+    {
+        $file = tmpfile();
+        $testFilePath = stream_get_meta_data($file)['uri'];
+        file_put_contents($testFilePath, 'test');
+
+        /** @var Client $client */
+        $client = static::createClient();
+        $file = new UploadedFile(
+            $testFilePath,
+            basename($testFilePath),
+            null,
+            null
+        );
+        $client->request(
+            'POST',
+            '/api/profile-photos',
+            [],
+            ['file' => $file],
+            [
+                'HTTP_ACCEPT' => 'application/ld+json',
+            ]
+        );
+
+        $response = $client->getResponse();
+
+        $this->assertEquals(400, $response->getStatusCode(), $response->getContent());
+    }
 }
