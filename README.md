@@ -133,7 +133,7 @@ There is no user authentication. It is assumed that there is only one applicatio
 
 ## User Stories
 
-**1.1. As a user I can create or edit a contact, which includes the first name, last name, profile photo, email, 
+**1. As a user I can create or edit a contact, which includes the first name, last name, profile photo, email, 
 favourite check, and one or more telephone numbers with labels.**
 
 Notes:
@@ -157,7 +157,7 @@ Confirmations:
 * Test that a selected profile photo added to a new contact is visible after save.
 * Test that creation/editing fails for the profile photo when invalid file type is selected or the max size is above the 10MB limit.
 
-**1.2. As a user I can delete a contact from the list view or the edit view.**
+**2. As a user I can delete a contact from the list view or the edit view.**
 
 Notes:
 
@@ -170,7 +170,7 @@ Confirmations:
 * Test that confirmation dialog is shown when clicked on delete button.
 * Test that contact is actually gone once the deletion is confirmed.
 
-**1.3. As a user I can check/uncheck a contact as favourite directly from the list view or the detail view.**
+**3. As a user I can check/uncheck a contact as favourite directly from the list view or the detail view.**
 
 Notes:
 
@@ -182,7 +182,7 @@ Confirmations:
 * Test that contact checked as favourite has the check active on the list view and detail view.
 * Test that previously favourite contact can be made not-favourite.
 
-**1.4. As a user I can view my contacts in a list of all contacts and a list of my favourites.**
+**4. As a user I can view my contacts in a list of all contacts and a list of my favourites.**
 
 Confirmations:
 
@@ -193,7 +193,7 @@ Confirmations:
 * Test that by clicking on the "My favourites" only those with favourite flag are displayed.
 * Test that by clicking on the "All contacts" all contacts are displayed.
 
-**1.5. As a user I can search my contacts using a search box that matches my query against all text fields of a contact.**
+**5. As a user I can search my contacts using a search box that matches my query against all text fields of a contact.**
 
 Notes:
 
@@ -212,7 +212,7 @@ Confirmations:
 * Test that search terms are properly sanitised and escaped when displayed in the search box.
 * Test that search works in the same way on list of all contacts and my favourites.
 
-**1.6. As a user I can access a read-only details view of a contact which includes the first name, last name,
+**6. As a user I can access a read-only details view of a contact which includes the first name, last name,
 profile photo, email, favourite check, and one or more telephone numbers with labels.**
 
 Notes:
