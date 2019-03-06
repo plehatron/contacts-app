@@ -14,7 +14,7 @@ class ProfilePhotoTest extends WebTestCase
         $testFilePath = __DIR__.'/../../var/profile-photo.jpg';
 
         $fs = new Filesystem();
-        $fs->copy(__DIR__.'/fixtures/profile-photo.jpg', $testFilePath);
+        $fs->copy(__DIR__.'/../fixtures/profile-photo.jpg', $testFilePath);
 
         /** @var Client $client */
         $client = static::createClient();
@@ -41,6 +41,7 @@ class ProfilePhotoTest extends WebTestCase
         $data = json_decode($response->getContent());
         $this->assertNotEmpty($data->fileName);
         $this->assertEquals('ProfilePhoto', $data->{'@type'});
+
     }
 
     public function testInvalidFile()

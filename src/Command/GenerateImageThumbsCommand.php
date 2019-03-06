@@ -25,10 +25,19 @@ class GenerateImageThumbsCommand extends Command
      */
     private $thumbnailGenerator;
 
-    public function __construct(EntityManagerInterface $entityManager, ImageThumbnailGenerator $thumbnailGenerator)
-    {
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ImageThumbnailGenerator $thumbnailGenerator,
+        Filesystem $filesystem
+    ) {
         $this->entityManager = $entityManager;
         $this->thumbnailGenerator = $thumbnailGenerator;
+        $this->filesystem = $filesystem;
 
         parent::__construct();
     }
@@ -43,18 +52,22 @@ class GenerateImageThumbsCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Generating image thumbnails...');
 
+        $counter = 0;
+
         /** @var Contact[] $contacts */
         $contacts = $this->entityManager->getRepository(Contact::class)->findAll();
         foreach ($contacts as $contact) {
-            $sourceFilePath = 'profile-photos/'.$contact->getProfilePhoto()->getFileName();
-            if (false === file_exists($sourceFilePath)) {
+            $sourceFileName = 'profile-photos/'.$contact->getProfilePhoto()->getFileName();
+            $sourceFilePath = $this->thumbnailGenerator->getSourcePath().'/'.$sourceFileName;
+            if (false === $this->filesystem->exists($sourceFilePath)) {
                 $io->note(sprintf('Source file %s does not exist', $sourceFilePath));
                 continue;
             }
-            $thumbnailPath = $this->thumbnailGenerator->generate($sourceFilePath);
+            $counter++;
+            $thumbnailPath = $this->thumbnailGenerator->generate($sourceFileName);
             $io->writeln($thumbnailPath);
         }
 
-        $io->success(sprintf('Done! Generated %d thumbnails.', count($contacts)));
+        $io->success(sprintf('Done! Generated %d thumbnails.', $counter));
     }
 }

@@ -85,14 +85,12 @@ class ContactFixtures extends Fixture
         $profilePhoto->setFileName(pathinfo($imageLocalPath, PATHINFO_BASENAME));
         $this->thumbnailGenerator->generate('profile-photos/'.$profilePhoto->getFileName());
         $contact->setProfilePhoto($profilePhoto);
-        $localFakePhoneNumberLabels = $fakePhoneNumberLabels;
-        shuffle($localFakePhoneNumberLabels);
         for ($pn = 1; $pn <= $this->faker->numberBetween(1, 5); $pn++) {
             $fakePhoneNumber = $this->faker->randomElement($fakePhoneNumbers);
             $contact->addPhoneNumber(
                 (new ContactPhoneNumber())
                     ->setNumber($fakePhoneNumber)
-                    ->setLabel(array_pop($localFakePhoneNumberLabels))
+                    ->setLabel($this->faker->randomElement($fakePhoneNumberLabels))
             );
         }
 
