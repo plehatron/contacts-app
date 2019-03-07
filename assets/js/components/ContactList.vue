@@ -5,26 +5,24 @@
                 <div class="column">
                     <a class="btn btn-link float-right"
                        v-on:click="navigateRoute('contactListAll')"
-                       v-bind:class="{ active: isCurrentRoute('contactListAll') }"
-                    >
+                       v-bind:class="{ active: isCurrentRoute('contactListAll') }">
                         All contacts
                     </a>
                 </div>
-                <div class="divider-vert"></div>
+                <div class="divider-vert hide-xs"></div>
                 <div class="column">
                     <a class="btn btn-link float-left"
                        v-on:click="navigateRoute('contactListFavourites')"
-                       v-bind:class="{ active: isCurrentRoute('contactListFavourites') }"
-                    >
+                       v-bind:class="{ active: isCurrentRoute('contactListFavourites') }">
                         My favourites
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="search container">
+        <div class="search container grid-lg">
             <div class="columns">
-                <div class="column col-4 col-mx-auto">
+                <div class="column col-6 col-md-8 col-sm-10 col-mx-auto">
                     <div class="has-icon-left">
                         <input v-on:keyup="searchDelayed"
                                v-model="searchQueryData"
@@ -40,10 +38,10 @@
         </div>
 
 
-        <div class="container">
-            <div class="columns">
-                <div class="contacts column col-8 col-mx-auto">
+        <div class="container grid-lg">
+            <div class="contacts columns">
 
+                <div class="column col-3 col-md-4 col-sm-6 col-xs-12">
                     <router-link
                             class="contact card bnt-new-contact"
                             :to="{name: 'contactNew'}"
@@ -54,17 +52,19 @@
                             <div class="card-title h5 text-center">Add New</div>
                         </div>
                     </router-link>
-
-                    <ContactItem
-                            v-for="(contact, index) in contacts"
-                            v-bind:contact="contact"
-                            v-bind:index="index"
-                            v-bind:key="contact.id"
-                            v-on:confirmRemove="confirmRemove(contact, index)"
-                            v-on:remove="remove(contact, index)"
-                            v-on:favourite="favourite(contact)"
-                    />
                 </div>
+
+                <ContactItem
+                        class="column col-3 col-md-4 col-sm-6 col-xs-12"
+                        v-for="(contact, index) in contacts"
+                        v-bind:contact="contact"
+                        v-bind:index="index"
+                        v-bind:key="contact.id"
+                        v-on:confirmRemove="confirmRemove(contact, index)"
+                        v-on:remove="remove(contact, index)"
+                        v-on:favourite="favourite(contact)"
+                />
+
             </div>
         </div>
 
@@ -192,8 +192,12 @@
         color: #302ecd;
     }
 
+    .filters .btn.text-gray:hover {
+        color: #5755d9 !important;
+    }
+
     .search {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         margin-top: 1.4rem;
     }
 
@@ -205,61 +209,58 @@
         padding-left: 2rem;
     }
 
-    .contacts {
-        display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+    .contacts .column {
+        padding: .4rem;
     }
 
-    .contact.card {
-        width: 100%;
-        min-height: 170px;
+    .contacts .contact.card {
         background-color: inherit;
         cursor: pointer;
+        height: 100%;
+        min-height: 164px;
     }
 
-    .contact.card .card-header {
+    .contacts .contact.card .card-header {
         padding: .4rem .4rem 0;
     }
 
-    .contact.card .card-body {
+    .contacts .contact.card .card-body {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
 
-    .bnt-new-contact {
+    .contacts .bnt-new-contact {
         border-style: dashed;
         align-items: center;
+        width: 100%;
     }
 
-    .btn-new-contact .card-body {
+    .contacts .btn-new-contact .card-body {
         align-items: center;
     }
 
-    .contact .avatar {
+    .contacts .contact .avatar {
         position: relative;
         bottom: .8rem;
     }
 
-    .contact.card .btn-edit {
+    .contacts .contact.card .btn-edit {
         margin-right: .6rem;
     }
 
-    .contact.card .btn-edit, .contact.card .btn-delete {
+    .contacts .contact.card .btn-edit,
+    .contacts .contact.card .btn-delete {
         visibility: hidden;
     }
 
-    .contact.card:hover {
+    .contacts .contact.card:hover {
         border-color: #5755d9;
     }
 
-    .contact.card:hover .btn-edit, .contact.card:hover .btn-delete {
+    .contacts .contact.card:hover .btn-edit,
+    .contacts .contact.card:hover .btn-delete {
         visibility: visible;
-    }
-
-    .filters .btn.text-gray:hover {
-        color: #5755d9 !important;
     }
 </style>
