@@ -80,7 +80,7 @@ class Contact
     private $favourite = false;
 
     /**
-     * @var ContactPhoneNumber[]
+     * @var ContactPhoneNumber[]|ArrayCollection
      *
      * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="App\Entity\ContactPhoneNumber", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)

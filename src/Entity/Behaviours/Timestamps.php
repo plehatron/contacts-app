@@ -58,7 +58,7 @@ trait Timestamps
      */
     public function updateTimestamps()
     {
-        $dateTime = DateTimeImmutable::createFromFormat('U', time());
+        $dateTime = DateTimeImmutable::createFromFormat('U', (string)time());
         if (null === $this->createdAt) {
             $this->createdAt = $dateTime;
         }

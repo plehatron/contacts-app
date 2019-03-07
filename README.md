@@ -65,9 +65,13 @@ Core:
 - MySQL 8.0
 - Nginx 1.14
 - Node.js 10 LTS
+
+Frameworks and Tools:
+
 - [Symfony 4.2](https://symfony.com/)
 - [API Platform 1.2](https://api-platform.com/)
 - [PHPUnit 6.5](https://phpunit.de/)
+- [PHPStan](https://github.com/phpstan/phpstan)
 - [Spectre.css](https://picturepan2.github.io/spectre/index.html)
 - [Vue 2.6](https://vuejs.org/)
 
@@ -115,6 +119,14 @@ docker/bin/php bin/phpunit
 ```
 
 Code coverage for the backend tests can be found at `./var/log/coverage`.
+
+## Static Analysis
+
+PHPStan is used for finding errors in code. Run it with command:
+
+```
+vendor/bin/phpstan analyse -l 5 src tests
+```
 
 ## Frontend
 
