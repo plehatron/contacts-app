@@ -41,6 +41,17 @@
         <div class="container grid-lg">
             <div class="contacts columns">
 
+                <ContactItem
+                        class="column col-3 col-md-4 col-sm-6 col-xs-12"
+                        v-for="(contact, index) in contacts"
+                        v-bind:contact="contact"
+                        v-bind:index="index"
+                        v-bind:key="contact.id"
+                        v-on:confirmRemove="confirmRemove(contact, index)"
+                        v-on:remove="remove(contact, index)"
+                        v-on:favourite="favourite(contact)"
+                />
+
                 <div class="column col-3 col-md-4 col-sm-6 col-xs-12">
                     <router-link
                             class="contact card bnt-new-contact"
@@ -54,23 +65,13 @@
                     </router-link>
                 </div>
 
-                <ContactItem
-                        class="column col-3 col-md-4 col-sm-6 col-xs-12"
-                        v-for="(contact, index) in contacts"
-                        v-bind:contact="contact"
-                        v-bind:index="index"
-                        v-bind:key="contact.id"
-                        v-on:confirmRemove="confirmRemove(contact, index)"
-                        v-on:remove="remove(contact, index)"
-                        v-on:favourite="favourite(contact)"
-                />
-
             </div>
         </div>
 
         <ConfirmDialog
                 v-if="showConfirmDialog"
-                v-bind:title="'Delete contact \'' + selectedForRemove.firstName + ' ' + selectedForRemove.lastName + '\'?'"
+                v-bind:title="'Delete this contact?'"
+                v-bind:description='"Are you sure you want to delete \"" + selectedForRemove.firstName + " " + selectedForRemove.lastName + "\" from your contacts?"'
                 v-bind:actionTitle="'Delete'"
                 v-on:confirm="remove(selectedForRemove, selectedForRemoveIndex)"
                 v-on:cancel="showConfirmDialog = false; selectedForRemove = null; selectedForRemoveIndex = null"
@@ -241,6 +242,11 @@
         align-items: center;
     }
 
+    .contacts a {
+        color: inherit;
+        text-decoration: none;
+    }
+
     .contacts .contact .avatar {
         position: relative;
         bottom: .8rem;
@@ -250,17 +256,21 @@
         margin-right: .6rem;
     }
 
-    .contacts .contact.card .btn-edit,
-    .contacts .contact.card .btn-delete {
-        visibility: hidden;
-    }
-
     .contacts .contact.card:hover {
         border-color: #5755d9;
     }
 
-    .contacts .contact.card:hover .btn-edit,
-    .contacts .contact.card:hover .btn-delete {
+    .contacts .contact .dropdown-toggle {
+        visibility: hidden;
+    }
+
+    .contacts .contact:hover .dropdown-toggle {
         visibility: visible;
+    }
+
+    @media (hover: none) {
+        .contacts .contact .dropdown-toggle {
+            visibility: visible;
+        }
     }
 </style>

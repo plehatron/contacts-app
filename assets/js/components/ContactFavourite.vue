@@ -1,6 +1,6 @@
 <template>
     <div class="favourite-container">
-        <button v-on:click.stop="favourite"
+        <button v-on:click.stop.prevent="favourite"
                 :class="'btn btn-sm btn-action btn-favourite s-circle ' + floatClass"
                 title="Favourite">
             <i v-if="contact.favourite" class="fas fa-heart"></i>

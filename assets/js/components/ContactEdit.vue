@@ -1,32 +1,16 @@
 <template>
-    <div class="edit columns">
-        <div class="column col-6 col-mx-auto">
+    <div class="edit">
+        <div class="container grid-sm">
             <div v-if="error" class="toast toast-error m-2">
                 <button v-on:click.stop="error = null" type="button"
                         class="btn btn-clear float-right"></button>
                 <p>{{ error }}</p>
             </div>
-            <form v-if="!loading" @submit.prevent="handleSubmit" class="columns">
-                <div class="column col-auto">
-                    <input type="file"
-                           class="input-file"
-                           id="input-photo-upload"
-                           v-on:change="uploadProfilePhoto"
-                           accept=".jpg,.png">
-                    <label class="avatar avatar-xxl photo-upload"
-                           v-bind:class="{'loading loading-lg': profilePhotoLoading}"
-                           for="input-photo-upload">
-                        <i class="fas fa-upload"></i>
-                        <img id="photo-preview"
-                             :src="profilePhoto ? profilePhotoPath + '/' + profilePhoto.fileName : false">
-                    </label>
-                </div>
+            <form v-if="!loading" @submit.prevent="handleSubmit" class="columns col-gapless">
 
-                <div class="column col-8">
-
-                    <div class="edit-header columns">
+                <div class="column col-12">
+                    <div class="edit-header columns col-gapless">
                         <div class="column col-1">
-
                             <router-link
                                     v-if="id"
                                     class="btn btn-sm btn-action btn-back s-circle"
@@ -45,109 +29,119 @@
                                     type="button">
                                 <i class="fas fa-arrow-left"></i>
                             </router-link>
-
                         </div>
-
                         <div class="column col-10">
                             <h4 v-if="id">Edit contact #{{ id }}</h4>
                             <h4 v-else>Create contact</h4>
                         </div>
-
                         <div class="column col-1">
                             <button v-if="id" v-on:click.stop="confirmRemove"
-                                    class="btn btn-sm btn-action btn-delete s-circle"
+                                    class="btn btn-sm btn-action btn-delete s-circle float-right"
                                     title="Delete"
                                     type="button">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="edit-body">
+                <div class="column col-4 col-sm-12 edit-body edit-photo">
+                    <input type="file"
+                           class="input-file"
+                           id="input-photo-upload"
+                           v-on:change="uploadProfilePhoto"
+                           accept=".jpg,.png">
+                    <label class="avatar avatar-xxl photo-upload"
+                           v-bind:class="{'loading loading-lg': profilePhotoLoading}"
+                           for="input-photo-upload">
+                        <i class="fas fa-upload"></i>
+                        <img id="photo-preview"
+                             :src="profilePhoto ? profilePhotoPath + '/' + profilePhoto.fileName : false">
+                    </label>
+                </div>
 
-                        <h6><i class="fas fa-user-circle"></i> First and last name</h6>
-                        <div class="columns">
-                            <div class="column col-6">
-                                <div v-bind:class="{ 'has-error': contact._validation.firstName }" class="form-group">
-                                    <input v-model="contact.firstName"
-                                           class="form-input"
-                                           type="text"
-                                           placeholder="First name">
-                                    <p v-if="contact._validation.firstName" class="form-input-hint">
-                                        {{ contact._validation.firstName }}</p>
-                                </div>
-                            </div>
-                            <div class="column col-6">
-                                <div v-bind:class="{ 'has-error': contact._validation.lastName }" class="form-group">
-                                    <input v-model="contact.lastName"
-                                           class="form-input"
-                                           type="text"
-                                           placeholder="Last name">
-                                    <p v-if="contact._validation.lastName" class="form-input-hint">
-                                        {{ contact._validation.lastName }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="divider"></div>
-                        <h6><i class="fas fa-envelope"></i> Email</h6>
-                        <div v-bind:class="{ 'has-error': contact._validation.emailAddress }" class="form-group">
-                            <input v-model="contact.emailAddress" class="form-input" type="email" placeholder="Email">
-                            <p v-if="contact._validation.emailAddress" class="form-input-hint">
-                                {{ contact._validation.emailAddress }}</p>
-                        </div>
-                        <div class="divider"></div>
-                        <h6><i class="fas fa-phone-square"></i> Phone numbers</h6>
-
-                        <div class="edit-phone-numbers">
-                            <ContactEditPhoneNumber
-                                    v-for="(phoneNumber, index) in contact.phoneNumbers"
-                                    :key="phoneNumber.id"
-                                    v-bind:phoneNumber="phoneNumber"
-                                    v-on:removePhoneNumber="removePhoneNumber(phoneNumber, index)"
-                            />
-                        </div>
-
-                        <button v-on:click.stop="addPhoneNumber"
-                                class="btn btn-link btn-add-phone-number"
-                                title="Add phone number"
-                                type="button">
-                            <i class="fas fa-plus"></i> Add phone number
-                        </button>
-
-                        <div v-if="submitError" class="toast toast-error">
-                            <button v-on:click.stop="submitError = null" type="button"
-                                    class="btn btn-clear float-right"></button>
-                            <p>{{ submitError }}</p>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="columns">
-                            <div class="column col-6">
-                                <router-link
-                                        v-if="id"
-                                        class="btn btn-cancel float-left"
-                                        :to="{name: 'contactDetails', params: {id: this.id}}"
-                                        tag="button"
-                                        title="Cancel edit"
-                                        type="button">
-                                    Cancel
-                                </router-link>
-                                <router-link
-                                        v-else
-                                        class="btn btn-cancel float-left"
-                                        :to="{name: 'contactListAll'}"
-                                        tag="button"
-                                        title="Cancel edit"
-                                        type="button">
-                                    Cancel
-                                </router-link>
-                            </div>
-                            <div class="column col-6">
-                                <button class="btn btn-primary btn-save float-right" type="submit">Save</button>
+                <div class="column col-8 col-sm-12 edit-body">
+                    <h6><i class="fas fa-user-circle"></i> First and last name</h6>
+                    <div class="columns">
+                        <div class="column col-6">
+                            <div v-bind:class="{ 'has-error': contact._validation.firstName }" class="form-group">
+                                <input v-model="contact.firstName"
+                                       class="form-input"
+                                       type="text"
+                                       placeholder="First name">
+                                <p v-if="contact._validation.firstName" class="form-input-hint">
+                                    {{ contact._validation.firstName }}</p>
                             </div>
                         </div>
+                        <div class="column col-6">
+                            <div v-bind:class="{ 'has-error': contact._validation.lastName }" class="form-group">
+                                <input v-model="contact.lastName"
+                                       class="form-input"
+                                       type="text"
+                                       placeholder="Last name">
+                                <p v-if="contact._validation.lastName" class="form-input-hint">
+                                    {{ contact._validation.lastName }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <h6><i class="fas fa-envelope"></i> Email</h6>
+                    <div v-bind:class="{ 'has-error': contact._validation.emailAddress }" class="form-group">
+                        <input v-model="contact.emailAddress" class="form-input" type="email" placeholder="Email">
+                        <p v-if="contact._validation.emailAddress" class="form-input-hint">
+                            {{ contact._validation.emailAddress }}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <h6><i class="fas fa-phone-square"></i> Phone numbers</h6>
 
+                    <div class="edit-phone-numbers">
+                        <ContactEditPhoneNumber
+                                v-for="(phoneNumber, index) in contact.phoneNumbers"
+                                :key="phoneNumber.id"
+                                v-bind:phoneNumber="phoneNumber"
+                                v-on:removePhoneNumber="removePhoneNumber(phoneNumber, index)"
+                        />
+                    </div>
+
+                    <button v-on:click.stop="addPhoneNumber"
+                            class="btn btn-link btn-add-phone-number"
+                            title="Add phone number"
+                            type="button">
+                        <i class="fas fa-plus"></i> Add phone number
+                    </button>
+
+                    <div v-if="submitError" class="toast toast-error">
+                        <button v-on:click.stop="submitError = null" type="button"
+                                class="btn btn-clear float-right"></button>
+                        <p>{{ submitError }}</p>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="columns">
+                        <div class="column col-6">
+                            <router-link
+                                    v-if="id"
+                                    class="btn btn-cancel float-left"
+                                    :to="{name: 'contactDetails', params: {id: this.id}}"
+                                    tag="button"
+                                    title="Cancel edit"
+                                    type="button">
+                                Cancel
+                            </router-link>
+                            <router-link
+                                    v-else
+                                    class="btn btn-cancel float-left"
+                                    :to="{name: 'contactListAll'}"
+                                    tag="button"
+                                    title="Cancel edit"
+                                    type="button">
+                                Cancel
+                            </router-link>
+                        </div>
+                        <div class="column col-6">
+                            <button class="btn btn-primary btn-save float-right" type="submit">Save</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -155,7 +149,8 @@
 
         <ConfirmDialog
                 v-if="showConfirmDialog"
-                v-bind:title="'Delete contact \'' + contact.firstName + ' ' + contact.lastName + '\'?'"
+                v-bind:title="'Delete this contact?'"
+                v-bind:description='"Are you sure you want to delete \"" + contact.firstName + " " + contact.lastName + "\" from your contacts?"'
                 v-bind:actionTitle="'Delete'"
                 v-on:confirm="remove()"
                 v-on:cancel="showConfirmDialog = false"
@@ -172,7 +167,7 @@
     name: 'ContactEdit',
     components: {
       ContactEditPhoneNumber,
-      ConfirmDialog
+      ConfirmDialog,
     },
     data() {
       return {
@@ -194,7 +189,7 @@
         profilePhotoLoading: false,
         error: null,
         submitError: null,
-        showConfirmDialog: false
+        showConfirmDialog: false,
       };
     },
     computed: {
@@ -408,7 +403,7 @@
 
 <style>
     .edit {
-        padding-top: 2rem;
+        padding-top: 1.6rem;
         border-top: .05rem solid #5755d9;
     }
 
@@ -460,25 +455,18 @@
         margin-right: .2rem;
     }
 
-    .edit .avatar {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .edit .avatar i {
-        position: absolute;
-        z-index: 2;
-        bottom: 3.4rem;
-    }
-
     .edit .form-input-hint {
         margin: .2rem 0;
     }
 
-    .input-file {
+    .edit-photo .avatar i {
+        position: absolute;
+        z-index: 2;
+        bottom: 3rem;
+        left: 2.5rem;
+    }
+
+    .edit-photo .input-file {
         width: 0.1px;
         height: 0.1px;
         opacity: 0;
@@ -487,11 +475,17 @@
         z-index: -1;
     }
 
-    .photo-upload {
+    .edit-photo {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .edit-photo .photo-upload {
         cursor: pointer;
     }
 
-    .photo-upload.loading::after {
+    .edit-photo .photo-upload.loading::after {
         border-color: #fff;
         border-right-color: transparent;
         border-top-color: transparent;

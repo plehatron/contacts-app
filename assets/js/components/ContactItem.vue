@@ -1,27 +1,32 @@
 <template>
     <router-link
-            tag="div"
+            tag="a"
             :to="{name: 'contactDetails', params: {id: contact.id}}">
         <div class="contact card">
             <div class="card-header">
-
                 <ContactFavourite v-bind:contact="contact"/>
-
-                <button v-on:click.stop="$emit('confirmRemove')"
-                        class="btn btn-sm btn-action btn-delete s-circle float-right"
-                        title="Delete">
-                    <i class="far fa-trash-alt"></i>
-                </button>
-
-                <router-link
-                        class="btn btn-sm btn-action btn-edit s-circle float-right"
-                        :to="{name: 'contactEdit', params: {id: contact.id}}"
-                        tag="button"
-                        title="Edit"
-                >
-                    <i class="far fa-edit"></i>
-                </router-link>
-
+                <div class="dropdown dropdown-right float-right">
+                    <button v-on:click.stop.prevent="event.preventDefault()"
+                            class="btn btn-sm btn-action s-circle dropdown-toggle">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="menu">
+                        <li class="menu-item">
+                            <div class="menu-item-content"
+                                 v-on:click.stop.prevent="$router.push({name: 'contactEdit', params: {id: contact.id}})"
+                                 title="Edit">
+                                <i class="far fa-edit"></i> Edit
+                            </div>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-item-content"
+                               v-on:click.stop.prevent="$emit('confirmRemove')"
+                               title="Delete">
+                                <i class="far fa-trash-alt text-error"></i> Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="card-body">
                 <figure :data-initial="contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()"

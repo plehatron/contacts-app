@@ -1,19 +1,10 @@
 <template>
-    <div class="details columns">
-        <div class="column col-6 col-mx-auto">
-            <div v-if="contact" class="columns">
+    <div class="details">
+        <div class="container grid-sm">
+            <div v-if="contact" class="columns col-gapless">
 
-                <div class="column col-auto">
-                    <figure :data-initial="contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()"
-                            class="avatar avatar-xxl"
-                            style="background-color: #5755d9;">
-                        <img v-if="contact.profilePhoto" :src="profilePhotoPath + '/' + contact.profilePhoto.fileName">
-                    </figure>
-                </div>
-
-                <div class="column col-8">
-
-                    <div class="details-header columns">
+                <div class="column col-12">
+                    <div class="details-header columns col-gapless">
                         <div class="column col-1">
                             <router-link
                                     class="btn btn-sm btn-action btn-back s-circle"
@@ -30,7 +21,7 @@
 
                         <div class="column col-1">
                             <router-link
-                                    class="btn btn-sm btn-action btn-edit s-circle"
+                                    class="btn btn-sm btn-action btn-edit s-circle float-right"
                                     :to="{name: 'contactEdit', params: {id: contact.id}}"
                                     tag="button"
                                     title="Edit">
@@ -38,36 +29,44 @@
                             </router-link>
                         </div>
                         <div class="column col-1">
-                            <ContactFavourite v-bind:contact="contact"/>
+                            <ContactFavourite v-bind:contact="contact" v-bind:float="'float-right'" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column col-4 col-sm-12 details-body details-photo">
+                    <figure :data-initial="contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()"
+                            class="avatar avatar-xxl"
+                            style="background-color: #5755d9;">
+                        <img v-if="contact.profilePhoto" :src="profilePhotoPath + '/' + contact.profilePhoto.fileName">
+                    </figure>
+                </div>
+
+                <div class="column col-8 col-sm-12 details-body">
+
+                    <div v-if="contact.emailAddress" class="columns">
+                        <div class="column col-pad col-4 col-sm-5">
+                            <span class="text-grayer"><i class="fas fa-envelope"></i> Email</span>
+                        </div>
+                        <div class="column col-pad col col-sm-7">
+                            <a :href="'mailto:' + contact.emailAddress">{{ contact.emailAddress }}</a>
                         </div>
                     </div>
 
-                    <div class="details-body">
-
-                        <div v-if="contact.emailAddress" class="columns">
-                            <div class="column col-pad col-4">
-                                <span class="text-grayer"><i class="fas fa-envelope"></i> Email</span>
-                            </div>
-                            <div class="column col-pad col">
-                                <a :href="'mailto:' + contact.emailAddress">{{ contact.emailAddress }}</a>
-                            </div>
+                    <div v-if="contact.phoneNumbers.length > 0" class="columns">
+                        <div class="column col-pad col-4 col-sm-5">
+                            <span class="text-grayer"><i class="fas fa-phone-square"></i> Numbers</span>
                         </div>
-
-                        <div v-if="contact.phoneNumbers.length > 0" class="columns">
-                            <div class="column col-pad col-4">
-                                <span class="text-grayer"><i class="fas fa-phone-square"></i> Numbers</span>
-                            </div>
-                            <div class="column col-pad col">
-                                <div v-for="phoneNumber in contact.phoneNumbers" class="columns">
-                                    <div class="column col-pad-bottom col-auto">
-                                        <a :href="'tel:' + phoneNumber.number">{{ phoneNumber.number }}</a> <span
-                                            class="label label-rounded">{{ phoneNumber.label }}</span>
-                                    </div>
+                        <div class="column col-pad col col-sm-7">
+                            <div v-for="phoneNumber in contact.phoneNumbers" class="columns">
+                                <div class="column col-pad-bottom col-auto">
+                                    <a :href="'tel:' + phoneNumber.number">{{ phoneNumber.number }}</a> <span
+                                        class="label label-rounded">{{ phoneNumber.label }}</span>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
             <div v-if="error">
@@ -123,8 +122,16 @@
 
 <style>
     .details {
-        padding-top: 2rem;
+        padding-top: 1.6rem;
         border-top: .05rem solid #5755d9;
+    }
+
+    .details .avatar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     .details-header {
@@ -137,9 +144,13 @@
         margin-top: .14rem;
     }
 
+    .details-header {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     .details-body {
         padding-top: 1rem;
-        padding-left: 2.2rem;
     }
 
     .details-body .col-pad {
@@ -160,5 +171,10 @@
 
     .details-body .text-grayer {
         color: #455060;
+    }
+
+    .details-photo {
+        display: flex;
+        justify-content: center;
     }
 </style>
