@@ -16,6 +16,7 @@ test:
     - docker/bin/node yarn install
     - docker/bin/node yarn encore dev
     - docker/bin/php bin/phpunit
+    - vendor/bin/phpstan analyse -l 5 src tests
   after_script:
     - docker-compose down
 
