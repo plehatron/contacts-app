@@ -3,20 +3,33 @@ variables:
   HOME: /home/gitlab-runner
 
 stages:
+  - build
   - test
   - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+    - bin/.phpunit/
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - docker-compose build
+    - docker/bin/php composer install --no-interaction
+    - docker/bin/node yarn install
+  after_script:
+    - docker-compose down
 
 test:
   stage: test
   script:
-    - docker-compose build
     - docker-compose up -d
-    - docker/bin/php composer install --no-interaction
     - docker/bin/php bin/reset_test_db
-    - docker/bin/node yarn install
     - docker/bin/node yarn encore dev
     - docker/bin/php bin/phpunit
-    - vendor/bin/phpstan analyse -l 5 src tests
   after_script:
     - docker-compose down
 
