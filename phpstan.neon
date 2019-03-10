@@ -2,4 +2,4 @@ parameters:
     autoload_files:
         - bin/.phpunit/phpunit-6.5/vendor/autoload.php
     excludes_analyse:
-		- %rootDir%/../../../src/Migrations/*
+        - %rootDir%/../../../src/Migrations/*

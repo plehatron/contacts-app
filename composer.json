@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -70,7 +70,7 @@
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "fzaninotto/faker": "^1.8",
-        "phpstan/phpstan": "^0.11.2",
+        "phpstan/phpstan": "^0.11.3",
         "symfony/maker-bundle": "^1.11",
         "symfony/phpunit-bridge": "4.2.*",
         "symfony/test-pack": "^1.0"
