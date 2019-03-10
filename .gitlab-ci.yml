@@ -1,0 +1,33 @@
+variables:
+  SYMFONY_ENV: test
+  HOME: /home/gitlab-runner
+
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  script:
+    - docker-compose build
+    - docker-compose up -d
+    - docker/bin/php composer install --no-interaction
+    - docker/bin/php bin/reset_test_db
+    - docker/bin/node yarn install
+    - docker/bin/node yarn encore dev
+    - docker/bin/php bin/phpunit
+  after_script:
+    - docker-compose down
+
+deploy:
+  stage: deploy
+  variables:
+    SYMFONY_ENV: prod
+  script:
+    - ssh "$PROD_HOST" "cd /opt/contacts && bin/deploy"
+  environment:
+    name: prod
+    url: https://contacts.plehatron.com
+  only:
+    - master
+    - tags
