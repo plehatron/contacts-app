@@ -11,9 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GenerateImageThumbsCommand extends Command
+class ImageThumbsGenerateCommand extends Command
 {
-    protected static $defaultName = 'generate-image-thumbs';
+    protected static $defaultName = 'image-thumbs:generate';
 
     /**
      * @var EntityManagerInterface

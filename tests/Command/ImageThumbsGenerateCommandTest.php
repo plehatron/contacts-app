@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GenerateImageThumbsCommandTest extends KernelTestCase
+class ImageThumbsGenerateCommandTest extends KernelTestCase
 {
     public function testExecute()
     {
@@ -20,7 +20,7 @@ class GenerateImageThumbsCommandTest extends KernelTestCase
         $kernel->boot();
         $application = new Application($kernel);
 
-        $command = $application->find('generate-image-thumbs');
+        $command = $application->find('image-thumbs:generate');
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);
 
