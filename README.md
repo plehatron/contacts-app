@@ -53,6 +53,12 @@ Create the database, run migrations and load the database with fixtures:
 ./docker/bin/php bin/console doctrine:fixtures:load
 ```
 
+Populate search engine's index:
+
+```bash
+./docker/bin/php bin/console search-engine:populate
+```
+
 Open the app in your browser at [contacts-app.localhost:8091](http://contacts-app.localhost:8091).
 
 ## Software stack
