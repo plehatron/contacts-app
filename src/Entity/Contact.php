@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ApiFilter(ContactSearchFilter::class)
  * @ApiFilter(BooleanFilter::class, properties={"favourite"})
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
+ * @ORM\EntityListeners({"App\EventListener\ContactSearchEngineIndexer"})
  * @ORM\Table(name="contact", indexes={
  *     @ORM\Index(columns={"first_name", "last_name", "email_address"}, flags={"fulltext"})})
  * })
