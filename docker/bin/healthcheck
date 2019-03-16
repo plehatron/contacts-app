@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+BASE_DIR=$(cd "$(dirname "$0")/.."; pwd)
+
+SERVICE=$1
+
+if [[ -z "$SERVICE" ]]; then
+    echo "Usage healthcheck {service}"
+    exit 1
+fi
+
+HEALTH_STATUS=$(docker inspect --format='{{json .State.Health.Status}}' $(docker-compose ps -q ${SERVICE}) | tr -d '"')
+
+echo ${HEALTH_STATUS}

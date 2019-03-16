@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+BASE_DIR=$(cd "$(dirname "$0")/.."; pwd)
+SERVICE=$1
+WAIT_FOR_STATUS=$2
+
+if [[ -z "$SERVICE" || -z "$WAIT_FOR_STATUS" ]]; then
+    echo "Usage healthcheck_wait_for {service} {wait_for_status}"
+    exit 1
+fi
+
+for i in {1..60}
+do
+    STATUS=$(exec ${BASE_DIR}/bin/healthcheck ${SERVICE})
+    if [[ "${STATUS}" = "${WAIT_FOR_STATUS}" ]]; then
+        echo "Status is ${STATUS}"
+        exit 0
+    else
+        if [[ "${i}" = 1 ]]; then
+            echo "Status is ${STATUS}. Sleeping for 60 seconds..."
+        fi
+        sleep 1
+    fi
+done

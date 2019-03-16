@@ -27,6 +27,7 @@ test:
   stage: test
   script:
     - docker-compose up -d
+    - docker/bin/healthcheck_wait_for search healthy
     - docker/bin/php bin/reset_test_db
     - docker/bin/node yarn encore dev
     - docker/bin/php bin/phpunit

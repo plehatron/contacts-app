@@ -23,7 +23,9 @@ services:
       MYSQL_ROOT_PASSWORD: toor
 
   search:
-    image: elasticsearch:6.6.1
+    build:
+      context: docker/image/elasticsearch
+      dockerfile: Dockerfile
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
