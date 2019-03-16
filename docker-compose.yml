@@ -6,6 +6,8 @@ services:
     build:
       context: docker/image/php
       dockerfile: Dockerfile
+      args:
+        build_env: dev
     volumes:
       - ./:/srv/app:delegated
 

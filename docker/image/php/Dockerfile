@@ -1,5 +1,7 @@
 FROM php:7.3-fpm-alpine
 
+ARG build_env=dev
+
 RUN apk add --no-cache \
     curl \
     git \
@@ -23,14 +25,15 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         intl \
         zip
 
-RUN pecl install \
-    xdebug-beta
-
 COPY --from=composer:1.8 /usr/bin/composer /usr/bin/composer
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 COPY conf.d/* /usr/local/etc/php/conf.d/
+COPY ./config.sh /config.sh
 COPY ./entrypoint.sh /entrypoint.sh
+
+RUN /config.sh
 
 WORKDIR /srv/app
 
