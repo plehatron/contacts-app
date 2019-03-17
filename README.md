@@ -71,6 +71,7 @@ Core:
 - MySQL 8.0
 - Nginx 1.14
 - Node.js 10 LTS
+- Elasticsearch 6.6
 
 Frameworks and Tools:
 
@@ -91,11 +92,12 @@ Additional libraries:
 ## Docker containers
 
 Docker with Docker Compose is used for running the whole stack. Four containers are used:
-- `nginx` - HTTP server for static assets and to proxy requests to PHP-FPM.
 - `php` - Runs PHP-FPM in daemon mode for the Symfony app, has PHP CLI enabled for unit/functional testing and 
+- `node` - Used by Symfony Encore for managing and compiling frontend assets using Webpack module bundler and Yarn dependency manager.
 [Composer](https://getcomposer.org/) for dependency management.
 - `db` - MySQL database for persisting contact data.
-- `node` - Used by Symfony Encore for managing and compiling frontend assets using Webpack module bundler and Yarn dependency manager.
+- `search` - Elasticsearch full-text search engine.
+- `http` - HTTP server for static assets and to proxy requests to PHP-FPM.
 
 ## Backend
 
@@ -106,13 +108,9 @@ API Platform was chosen because of it's numerous benefits, including:
 - Support for JSON-LD with deprecations that enable 
 [evolving APIs instead of API versions](https://api-platform.com/docs/core/deprecations/#deprecating-resources-and-properties-alternative-to-versioning).
 
+MySQL database is used for persisting contact data, and Elasticsearch for enabling full-text searching capabilities.
+
 Source files of the backend app can be found in the `config/`, `src/`, `templates/`, and `tests/` folders.
-
-## Database and search engine
-
-MySQL database, particularly version 8, is used because of its native fulltext support for InnoDB type tables. 
-This was chosen over Elasticsearch server mainly to reduce the memory consumption on the production
-VM server, and because the number of users is currently unknown, so a simpler solution and stack is enough for now.
 
 ## Tests
 
@@ -128,7 +126,7 @@ Code coverage for the backend tests can be found at `./var/log/coverage`.
 
 ## Static Analysis
 
-PHPStan is used for finding errors in code. Run it with command:
+PHPStan can be used for finding errors in code. Run it with command:
 
 ```
 vendor/bin/phpstan analyse -l 5 src tests
