@@ -50,14 +50,29 @@ final class ContactSearchFilter extends AbstractContextAwareFilter
 
         // Note that max search term length is limited to N characters (including spaces)
         $searchTermsString = mb_substr(filter_var($searchTermsString, FILTER_SANITIZE_STRING), 0, 100);
+        $searchTerms = explode(' ', $searchTermsString);
+        $searchTerms = array_filter(
+            $searchTerms,
+            function ($item) {
+                return trim($item);
+            }
+        );
+        // Note that number of search terms is hardcoded
+        $searchTerms = array_chunk($searchTerms, 5)[0];
+        $searchTerms = array_map(
+            function ($item) {
+                return $item . '*';
+            },
+            $searchTerms
+        );
 
         $searchParams = [
             'index' => $this->index->getName(),
             'type' => $this->index->getType(),
             'body' => [
                 'query' => [
-                    'simple_query_string' => [
-                        'query' => $searchTermsString,
+                    'query_string' => [
+                        'query' => implode(' ', $searchTerms),
                         'fields' => [
                             'first_name',
                             'last_name',
@@ -65,8 +80,8 @@ final class ContactSearchFilter extends AbstractContextAwareFilter
                             'phone_numbers.label',
                             'phone_numbers.number',
                         ],
-                        'default_operator' => 'or',
-                    ],
+                        'default_operator' => 'or'
+                    ]
                 ],
             ],
         ];

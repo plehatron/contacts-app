@@ -284,4 +284,21 @@ JSONLD
         $content = json_decode($response->getContent());
         $this->assertEquals(0, $content->{'hydra:totalItems'});
     }
+
+    public function testSearchWithPartialTerm()
+    {
+        $this->client->request(
+            'GET',
+            '/api/contacts?query=joa',
+            [],
+            [],
+            $this->defaultClientServerHeaders
+        );
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $content = json_decode($response->getContent());
+        $this->assertGreaterThan(0, $content->{'hydra:totalItems'});
+    }
 }
