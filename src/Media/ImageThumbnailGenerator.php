@@ -3,6 +3,8 @@
 namespace App\Media;
 
 use Gumlet\ImageResize;
+use Gumlet\ImageResizeException;
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -62,25 +64,33 @@ class ImageThumbnailGenerator
 
     /**
      * @param string $filename
-     * @param int $width
-     * @param int $height
+     * @param int|null $width
+     * @param int|null $height
      * @return string
-     * @throws \Gumlet\ImageResizeException
+     * @throws ImageResizeException
+     * @throws InvalidArgumentException
      */
     public function generate(string $filename, ?int $width = null, ?int $height = null): string
     {
         $sourceFilepath = $this->sourcePath.'/'.$filename;
         $thumbnailFilepath = $this->thumbnailPath.'/'.$filename;
 
+        if (false === $this->filesystem->exists($sourceFilepath)) {
+            throw new InvalidArgumentException(sprintf('Source file %s does not exist', $sourceFilepath));
+        }
+
         if (false === $this->filesystem->exists(dirname($thumbnailFilepath))) {
             $this->filesystem->mkdir(dirname($thumbnailFilepath));
         }
 
-        $maxShort = $this->defaultWidth > $this->defaultHeight ? $this->defaultWidth : $this->defaultHeight;
+        $width = $width ?? $this->defaultWidth;
+        $height = $height ?? $this->defaultHeight;
+
+        $maxShort = $width > $height ? $width : $height;
 
         $image = new ImageResize($sourceFilepath);
         $image->resizeToShortSide($maxShort, false);
-        $image->crop($this->defaultWidth, $this->defaultHeight, false, ImageResize::CROPTOPCENTER);
+        $image->crop($width, $height, false, ImageResize::CROPTOPCENTER);
         $image->save($thumbnailFilepath);
 
         return $thumbnailFilepath;

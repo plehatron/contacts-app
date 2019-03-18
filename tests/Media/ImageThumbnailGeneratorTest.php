@@ -8,10 +8,29 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageThumbnailGeneratorTest extends TestCase
 {
+    /**
+     * @var Filesystem
+     */
     private $fs;
+
+    /**
+     * @var string
+     */
     private $thumbDirectory;
+
+    /**
+     * @var string
+     */
     private $sourcePath;
+
+    /**
+     * @var string
+     */
     private $fileName;
+
+    /**
+     * @var string
+     */
     private $filePath;
 
     public function setUp()
@@ -38,18 +57,32 @@ class ImageThumbnailGeneratorTest extends TestCase
         }
     }
 
+    private function makeGenerator(): ImageThumbnailGenerator
+    {
+        return new ImageThumbnailGenerator($this->fs, $this->sourcePath, $this->thumbDirectory, 100, 100);
+    }
+
+    /**
+     * @throws \Gumlet\ImageResizeException
+     */
     public function testThumbGenerator()
     {
-
-        $thumbGenerator = new ImageThumbnailGenerator($this->fs, $this->sourcePath, $this->thumbDirectory, 100, 100);
+        $thumbGenerator = $this->makeGenerator();
         $thumbGenerator->generate($this->fileName);
 
         $this->assertEquals($this->sourcePath, $thumbGenerator->getSourcePath());
         $this->assertEquals($this->thumbDirectory, $thumbGenerator->getThumbnailPath());
         $this->assertFileExists($this->filePath);
-        $this->assertFileEquals(
-            __DIR__.'/../fixtures/profile-photo-thumb.jpg',
-            $this->filePath
-        );
+        $this->assertFileEquals(__DIR__.'/../fixtures/profile-photo-thumb.jpg', $this->filePath);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /does not exist/
+     */
+    public function testException()
+    {
+        $thumbGenerator = $this->makeGenerator();
+        $thumbGenerator->generate('/tmp/non-existent-file.jpg');
     }
 }
