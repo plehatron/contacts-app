@@ -76,8 +76,6 @@ class SearchEnginePopulateCommand extends Command
         $response = $this->client->indices()->create($params);
         if ($response['acknowledged']) {
             $io->success(sprintf('Index creation acknowledged'));
-        } else {
-            $io->warning(sprintf('Something went wrong: %s', var_export($response, true)));
         }
 
         // Populate with data

@@ -84,14 +84,6 @@ final class ContactSearchEngineIndexer
     }
 
     /**
-     * @param Contact $contact
-     */
-    public function remove($contact)
-    {
-        $this->removeById($contact->getId());
-    }
-
-    /**
      * @param $id
      * @return array
      */
