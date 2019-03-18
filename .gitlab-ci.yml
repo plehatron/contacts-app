@@ -30,7 +30,7 @@ test:
     - docker/bin/healthcheck_wait_for search healthy
     - docker/bin/php bin/reset_test_db
     - docker/bin/node yarn encore dev
-    - docker/bin/php bin/phpunit
+    - docker/bin/php bin/phpunit --coverage-text --colors=never
   after_script:
     - docker-compose down
 
