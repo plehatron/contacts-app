@@ -1,5 +1,8 @@
 # Contacts App
 
+[![pipeline status](https://gitlab.com/plehatron/contacts-app/badges/master/pipeline.svg)](https://gitlab.com/plehatron/contacts-app/commits/master) 
+[![coverage report](https://gitlab.com/plehatron/contacts-app/badges/master/coverage.svg)](https://gitlab.com/plehatron/contacts-app/commits/master)
+
 ## Demo
 
 Try out the demo app at [contacts.plehatron.com](https://contacts.plehatron.com).
