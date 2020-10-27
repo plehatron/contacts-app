@@ -54,6 +54,7 @@ trait Timestamps
 
     /**
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      * @throws \Exception
      */
     public function updateTimestamps()
